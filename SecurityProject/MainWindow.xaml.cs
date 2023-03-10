@@ -23,6 +23,31 @@ namespace SecurityProject
         public MainWindow()
         {
             InitializeComponent();
+            navbar.SelectedIndex= 0;
+            navframe.Source = new Uri("Pages/Home.xaml", UriKind.Relative);
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+                DragMove();
+        }
+
+        private void navbar_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selected = navbar.SelectedItem as NavButton;
+            navframe.Navigate(selected.Navlink);
+
+        }
+
+        private void btnMinimize_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }
