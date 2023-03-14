@@ -29,5 +29,15 @@ namespace SecurityProject.Pages
         {
 
         }
+
+        private void Encrypt_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Decrypt_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
