@@ -24,5 +24,10 @@ namespace SecurityProject.Pages
         {
             InitializeComponent();
         }
+
+        private void ChooseFile_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

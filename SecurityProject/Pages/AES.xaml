@@ -9,8 +9,22 @@
       Title="AES">
 
     <Grid>
-        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="30">AES</TextBlock>
-
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="Choose a file to ecrypt or use the input box to type a text to decrypt"/>
+        <Button Grid.Row="1" Margin="10" Click="ChooseFile_Click">Choose File</Button>
+        <TextBox Grid.Row="2" Margin="10" Text="{Binding Key}" />
+        <TextBox Grid.Row="3" Margin="10" Text="{Binding DecryptedText}" />
+        <TextBox Grid.Row="4" Margin="10" Text="{Binding EncryptedText}" />
+        <Button Grid.Row="5" Margin="10" Click="Encrypt_Click">Encrypt</Button>
+        <Button Grid.Row="6" Margin="10" Click="Decrypt_Click">Decrypt</Button>
     </Grid>
 </Page>
