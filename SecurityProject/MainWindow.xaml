@@ -5,8 +5,81 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SecurityProject"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" Height="500" Width="800"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        MouseDown="Window_MouseDown"
+        Background="Transparent"
+        AllowsTransparency="True">
+    <Border CornerRadius="19">
+        <Border.Background>
+            <ImageBrush ImageSource="/Data/BinaryRed.png" />
+        </Border.Background>
+        <Border CornerRadius="17"
+                BorderThickness="5"
+                BorderBrush="#1985a1">
+            <Border
+                CornerRadius="15" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <ListBox Name="navbar"
+                        BorderThickness="0"                          
+                        Margin="7,5,7,0"
+                        Grid.Row="0"
+                        Background="Transparent"
+                        SelectionChanged="navbar_SelectionChanged"
+                        SelectionMode="Single"
+                        ScrollViewer.VerticalScrollBarVisibility="Disabled">      
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <local:NavButton Navlink="/Pages/Home.xaml" Navtext="Encryption tool"/>
+                        <local:NavButton Navlink="/Pages/AES.xaml" Margin="5,0,0,0" Navtext="AES encryption"/>
+                        <local:NavButton Navlink="/Pages/RSA.xaml" Margin="5,0,0,0" Navtext="RSA encryption"/>
+                        <ListBoxItem>
+                            <Border CornerRadius="2"
+                                    Background="gray"
+                                    Margin="222,0,0,0">
+                                <Button Width="20"
+                                    Height="20"
+                                    x:Name="btnMinimize"
+                                    Click="btnMinimize_Click"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Background="Transparent"
+                                    BorderThickness="0"                                    
+                                    Content="-"
+                                    Foreground="LightGray">
+                                </Button>
+                            </Border>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <Border CornerRadius="2"
+                                    Background="gray">
+                                <Button Width="20"
+                                    Height="20"                                   
+                                    x:Name="btnClose"
+                                    Click="btnClose_Click"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Margin="0,0,0,0"
+                                    Content="x"
+                                    Foreground="DarkRed"> 
+                                </Button>
+                            </Border>
+                        </ListBoxItem>
+                    </ListBox>
 
-    </Grid>
+                    <Frame Grid.Row="1" Name="navframe" NavigationUIVisibility="Hidden" Background="Transparent">
+                    </Frame>
+                </Grid>
+            </Border>
+        </Border>
+    </Border>
 </Window>

@@ -7,4 +7,13 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Data\BinaryRed.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Data\binary.jpg" />
+    <Resource Include="Data\BinaryRed.png" />
+  </ItemGroup>
+
 </Project>
