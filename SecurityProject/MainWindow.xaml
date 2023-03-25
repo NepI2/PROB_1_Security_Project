@@ -41,7 +41,7 @@
                         </ListBox.ItemsPanel>
                         <local:NavButton Navlink="/Pages/Home.xaml" Navtext="Encryption tool"/>
                         <local:NavButton Navlink="/Pages/AES.xaml" Margin="5,0,0,0" Navtext="AES encryption"/>
-                        <local:NavButton Navlink="/Pages/RSA.xaml" Margin="5,0,0,0" Navtext="RSA encryption"/>
+                        <local:NavButton Navlink="/Pages/RSAPage.xaml" Margin="5,0,0,0" Navtext="RSA encryption"/>
                         <ListBoxItem>
                             <Border CornerRadius="2"
                                     Background="gray"

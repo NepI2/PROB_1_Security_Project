@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,21 @@ namespace SecurityProject.Pages
         {
             InitializeComponent();
         }
+        private void ChooseFolder_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new OpenFileDialog();
+            dialog.Title = "Select a folder";
+            dialog.Filter = "Folders|*.none";
+            dialog.CheckFileExists = false;
+            dialog.CheckPathExists = true;
+            dialog.FileName = "AES keys";
+            if (dialog.ShowDialog() == true)
+            {
+                // User selected a folder
+                string selectedPath = System.IO.Path.GetDirectoryName(dialog.FileName);
+                // Save or load keys from the selected path
+            }
+        }
 
         private void ChooseFile_Click(object sender, RoutedEventArgs e)
         {
@@ -39,5 +55,6 @@ namespace SecurityProject.Pages
         {
 
         }
+
     }
 }
