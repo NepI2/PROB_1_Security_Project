@@ -43,7 +43,7 @@ namespace SecurityProject.Pages
             dialog.Filter = "Folders|*.none";
             dialog.CheckFileExists = false;
             dialog.CheckPathExists = true;
-            dialog.FileName = "AES keys";
+            dialog.FileName = "RSA keys";
             if (dialog.ShowDialog() == true)
             {
                 string selectedPath = System.IO.Path.GetDirectoryName(dialog.FileName);
