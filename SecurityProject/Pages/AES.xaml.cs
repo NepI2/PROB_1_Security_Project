@@ -6,6 +6,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 
 namespace SecurityProject.Pages
@@ -18,6 +19,7 @@ namespace SecurityProject.Pages
         public AES()
         {
             InitializeComponent();
+            LoadAESKeys();
         }
         private void ChooseFolder_Click(object sender, RoutedEventArgs e)
         {
@@ -37,9 +39,10 @@ namespace SecurityProject.Pages
             var result = Helpers.SelectingFolder(StaticData.DefaultAESKeys, "Folders|*.none");
             if (result != null)
             {
+                StaticData.DefaultAESKeys = result;
                 System.Windows.Forms.MessageBox.Show("Folder picked");
             }
-            StaticData.DefaultAESKeys = result;
+            
         }
 
         private void ChooseFile_Click(object sender, RoutedEventArgs e)
@@ -57,6 +60,13 @@ namespace SecurityProject.Pages
             {
             }
             StaticData.SelectedAESFile = openPNG.FileName;
+            //show image before encryption
+            var bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+            bitmap.UriSource = new Uri(openPNG.FileName);
+            bitmap.EndInit();
+            imgResult.Source = bitmap;
         }
 
         AESEncryption aesEncrypt = new AESEncryption();
@@ -64,11 +74,24 @@ namespace SecurityProject.Pages
 
         private void Encrypt_Click(object sender, RoutedEventArgs e)
         {
+            // Fade out the image
+            DoubleAnimation animation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(1));
+            imgResult.BeginAnimation(Image.OpacityProperty, animation);
+
             aesEncrypt.EncryptStringToBytes_Aes();
+
+            // Fade in the image
+            animation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(1));
+            imgResult.BeginAnimation(Image.OpacityProperty, animation);
         }
 
         private void Decrypt_Click(object sender, RoutedEventArgs e)
         {
+
+            // Fade out the image
+            DoubleAnimation animation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(1));
+            imgResult.BeginAnimation(Image.OpacityProperty, animation);
+
             byte[] decrypted = aesDecrypt.DecryptBytesFromBytes_Aes();
             using (MemoryStream ms = new MemoryStream(decrypted))
             {
@@ -79,6 +102,9 @@ namespace SecurityProject.Pages
                     imgResult.Source = new BitmapImage(new Uri($"{StaticData.DefaultFileAESDecrypted}/{Path.GetFileNameWithoutExtension(temp)}.png"));
                 }
             }
+            // Fade in the image
+            animation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(1));
+            imgResult.BeginAnimation(Image.OpacityProperty, animation);
         }
 
         private void SelectKey_Click(object sender, RoutedEventArgs e)
@@ -94,6 +120,27 @@ namespace SecurityProject.Pages
             {
             }
             StaticData.SelectedAESKey = openXML.FileName;
+        }
+        private void LoadAESKeys()
+        {
+            // Get the AES key files from the default folder
+            string[] keyFiles = Directory.GetFiles(StaticData.DefaultAESKeys, "*.xml");
+
+            // Add the file names to the ComboBox
+            foreach (string keyFile in keyFiles)
+            {
+                KeyComboBox.Items.Add(System.IO.Path.GetFileName(keyFile));
+            }
+        }
+
+        private void KeyComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (KeyComboBox.SelectedItem != null)
+            {
+                string selectedKeyFileName = (string)KeyComboBox.SelectedItem;
+                string selectedKeyFilePath = Path.Combine(StaticData.DefaultAESKeys, selectedKeyFileName);
+                StaticData.SelectedAESKey = selectedKeyFilePath;
+            }
         }
     }
 }

@@ -42,10 +42,11 @@
                         <local:NavButton Navlink="/Pages/Home.xaml" Navtext="Encryption tool"/>
                         <local:NavButton Navlink="/Pages/AES.xaml" Margin="5,0,0,0" Navtext="AES encryption"/>
                         <local:NavButton Navlink="/Pages/RSAPage.xaml" Margin="5,0,0,0" Navtext="RSA encryption"/>
-                        <ListBoxItem>
+                        <local:NavButton Navlink="/Pages/Settings.xaml" Width="161" Margin="5,0,0,0" Navtext="Settings"/>
+                        <ListBoxItem Margin="60,0,0,0" Padding="0">
                             <Border CornerRadius="2"
                                     Background="gray"
-                                    Margin="222,0,0,0">
+                                    Margin="0,0,0,0">
                                 <Button Width="20"
                                     Height="20"
                                     x:Name="btnMinimize"
@@ -59,13 +60,15 @@
                                 </Button>
                             </Border>
                         </ListBoxItem>
-                        <ListBoxItem>
+                        <ListBoxItem Margin="5,0,0,0" Padding="0">
                             <Border CornerRadius="2"
                                     Background="gray">
                                 <Button Width="20"
                                     Height="20"                                   
                                     x:Name="btnClose"
                                     Click="btnClose_Click"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
                                     Background="Transparent"
                                     BorderThickness="0"
                                     Margin="0,0,0,0"

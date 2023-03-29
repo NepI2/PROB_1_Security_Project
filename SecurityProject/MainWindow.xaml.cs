@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,18 @@ namespace SecurityProject
             InitializeComponent();
             navbar.SelectedIndex= 0;
             navframe.Source = new Uri("Pages/Home.xaml", UriKind.Relative);
+            LoadConfig();
+        }
+
+        private void LoadConfig()
+        {
+            // Load the saved value from the App.config file and set the DefaultAESKeys property
+            string defaultAESKeys = ConfigurationManager.AppSettings["DefaultAESKeys"];
+            if (!string.IsNullOrEmpty(defaultAESKeys))
+            {
+                StaticData.DefaultAESKeys = defaultAESKeys;
+            }
+
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)

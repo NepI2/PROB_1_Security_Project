@@ -20,8 +20,11 @@
             With this app you can encrypt and decrypt with AES and RSA encryption and save your keys in XML format. <LineBreak/>
             Whether you're looking to encrypt or decrypt.<LineBreak/>
             This app has got you covered. <LineBreak/>
-            
+
         </TextBlock>
-        
+        <TextBox x:Name ="txtGenKey" Height="30" Margin="175,340,275,80"/>
+        <Button Height="30" Width="150" Margin="0,330,300,0" Content="generate AES key" x:Name="generateAES" Click="generateAES_Click"></Button>
+        <Button Height="30" Width="150" Margin="0,330,-100,0" Content="generate RSA key" x:Name="generateRSA" Click="generateRSA_Click" ></Button>
+
     </Grid>
 </Page>
