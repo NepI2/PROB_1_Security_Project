@@ -50,19 +50,20 @@ namespace SecurityProject.Pages
         private void Encrypt_Click(object sender, RoutedEventArgs e)
         {
             string publicKey = _rsa.GetPublicKey();
-            byte[] encryptedData = _rsa.Encrypt(_plainText, publicKey);
-            EncryptedText = Convert.ToBase64String(encryptedData);
+            string encryptedData = _rsa.Encrypt(_plainText, publicKey);
+            EncryptedText = encryptedData;
             txtEncrypted.Text = EncryptedText;
         }
 
-        
+
         private void Decrypt_Click(object sender, RoutedEventArgs e)
         {
-            string privatekey = _rsa.GetPrivateKey();
-            byte[] encryptedBytes = _rsa.Encrypt(_plainText, privatekey);
-            DecryptedText = Convert.ToBase64String(encryptedBytes);
+            string privatekey = _rsa.GetPrivateKey(KeyComboBox.SelectedItem.ToString());
+            string encryptedBytes = EncryptedText;
+            DecryptedText = _rsa.Decrypt(encryptedBytes, privatekey);
             txtDecrypted.Text = DecryptedText;
         }
+
 
         private void LoadRSAKeys()
         {

@@ -6,54 +6,85 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls.Ribbon;
 using System.Xml;
+using System.Xml.Serialization;
 
 namespace SecurityProject.RSA
 {
     public class RSAEncryption
     {
-        private RSACryptoServiceProvider rsa;
+        private RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
+        private RSAParameters _privKey;
+        private RSAParameters _pubKey;
         public RSAEncryption()
         {
-            rsa = new RSACryptoServiceProvider();
+            _privKey = rsa.ExportParameters(true);
+            _pubKey = rsa.ExportParameters(false);
         }
 
         public void GenerateKeys(string name)
         {
-            using (var rsa = new RSACryptoServiceProvider())
+            string publicKeyPath = Path.Combine(StaticData.DefaultRSAKeys, $"{name}_public.xml");
+            string privateKeyPath = Path.Combine(StaticData.DefaultRSAKeys, $"{name}_private.xml");
+            if (File.Exists(publicKeyPath) && File.Exists(privateKeyPath))
             {
-                rsa.KeySize = 2048;
-                string publicKey = rsa.ToXmlString(true);
-                string privateKey = rsa.ToXmlString(false);
-                rsa.PersistKeyInCsp = false;
-                File.WriteAllText(Path.Combine(StaticData.DefaultRSAKeys, $"{name}_public.xml"), publicKey);
-                File.WriteAllText(Path.Combine(StaticData.DefaultRSAKeys, $"{name}_private.xml"), privateKey);
+                // Keys already exist, no need to generate new ones
+                return;
             }
 
+            rsa.KeySize = 2048;
+            string publicKey = rsa.ToXmlString(false);
+            string privateKey = rsa.ToXmlString(true);
+            rsa.PersistKeyInCsp = false;
+            File.WriteAllText(publicKeyPath, publicKey);
+            File.WriteAllText(privateKeyPath, privateKey);
         }
         public string GetPublicKey()
         {
-            return rsa.ToXmlString(true);
+            var sw = new StringWriter();
+            var xs = new XmlSerializer(typeof(RSAParameters));
+            xs.Serialize(sw, _pubKey);
+            return sw.ToString();
+            //return rsa.ToXmlString(false);
         }
-        public string GetPrivateKey()
+        public string GetPrivateKey(string name)
         {
-            return rsa.ToXmlString(false);
+            string privateKeyName = name.Replace("_public", "_private");
+            string privateKeyPath = Path.Combine(StaticData.DefaultRSAKeys, $"{privateKeyName}.xml");
+            if (File.Exists(privateKeyPath))
+            {
+                return File.ReadAllText(privateKeyPath);
+            }
+            else
+            {
+                throw new FileNotFoundException("Private key file not found.", privateKeyPath);
+            }
         }
 
-        public byte[] Encrypt(string plainText, string publicKey)
+        public string Encrypt(string plainText, string publicKey)
         {
-            rsa.FromXmlString(publicKey);
-            byte[] plainBytes = Encoding.UTF8.GetBytes(plainText);
-            byte[] encryptedBytes = rsa.Encrypt(plainBytes, true);
-            return encryptedBytes;
+            rsa = new RSACryptoServiceProvider();
+            rsa.ImportParameters(_pubKey);
+            var data = Encoding.UTF8.GetBytes(plainText);
+            var cypher = rsa.Encrypt(data, false);
+            return Convert.ToBase64String(cypher);
+            //rsa.FromXmlString(publicKey);
+            //byte[] plainBytes = Encoding.UTF8.GetBytes(plainText);
+            //byte[] encryptedBytes = rsa.Encrypt(plainBytes, true);
+            //return encryptedBytes;
         }
 
-        public string Decrypt(byte[] encryptedBytes, string privateKey)
+        public string Decrypt(string cypherText, string privateKey)
         {
-            rsa.FromXmlString(privateKey);
-            byte[] decryptedBytes = rsa.Decrypt(encryptedBytes, true);
-            string decryptedText = Encoding.UTF8.GetString(decryptedBytes);
-            return decryptedText;
+            var dataBytes = Convert.FromBase64String(cypherText);
+            rsa.ImportParameters(_privKey);
+            var plainText = rsa.Decrypt(dataBytes, false);
+            return Encoding.UTF8.GetString(plainText);
+            //rsa.FromXmlString(privateKey);
+            //byte[] decryptedBytes = rsa.Decrypt(encryptedBytes, true);
+            //string decryptedText = Encoding.UTF8.GetString(decryptedBytes);
+            //return decryptedText;
         }
     }
 }

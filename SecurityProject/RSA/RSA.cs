@@ -27,14 +27,14 @@ namespace SecurityProject.RSA
         {
             rsa.FromXmlString(publicKey);
             byte[] plainBytes = Encoding.UTF8.GetBytes(plainText);
-            byte[] encryptedBytes = rsa.Encrypt(plainBytes, true);
+            byte[] encryptedBytes = rsa.Encrypt(plainBytes, RSAEncryptionPadding.OaepSHA256);
             return encryptedBytes;
         }
 
         public string Decrypt(byte[] encryptedBytes, string privateKey)
         {
             rsa.FromXmlString(privateKey);
-            byte[] decryptedBytes = rsa.Decrypt(encryptedBytes, true);
+            byte[] decryptedBytes = rsa.Decrypt(encryptedBytes, RSAEncryptionPadding.OaepSHA256);
             string decryptedText = Encoding.UTF8.GetString(decryptedBytes);
             return decryptedText;
         }
