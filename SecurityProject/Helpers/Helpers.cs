@@ -34,8 +34,8 @@ namespace Layout.HelpersClasses
             using (var fbd = new System.Windows.Forms.FolderBrowserDialog())
             {
 
-                fbd.Description = "Select the folder where you want to save the cyphertext";
-                fbd.ShowNewFolderButton = true; // Allow the user to create a new folder
+                fbd.Description = "Select a folder";
+                fbd.ShowNewFolderButton = true;
                 System.Windows.Forms.DialogResult result = fbd.ShowDialog();
 
                 if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))

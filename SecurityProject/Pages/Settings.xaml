@@ -122,7 +122,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Foreground="White" Grid.Column="0" Text="Encrypted files:" VerticalAlignment="Center" />
+                <TextBlock Foreground="White" Grid.Column="0" Text="Decrypted files:" VerticalAlignment="Center" />
                 <Button Grid.Column="2" x:Name="DecriptedFilesFolder" Padding="5" Click="DecriptedFilesFolderBtn_Click">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Choose Folder" />
@@ -137,7 +137,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Foreground="White" Grid.Column="0" Text="Encrypted files:" VerticalAlignment="Center" />
+                <TextBlock Foreground="White" Grid.Column="0" Text="Choosing files:" VerticalAlignment="Center" />
                 <Button Grid.Column="2" x:Name="ChoosingFilesFolder" Padding="5" Click="ChoosingFilesFolderBtn_Click">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Choose Folder" />

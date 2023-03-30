@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SecurityProject.Pages;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -31,12 +32,15 @@ namespace SecurityProject
 
         private void LoadConfig()
         {
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            string value = config.AppSettings.Settings["DefaultFoldersSet"].Value;
+            if (!string.IsNullOrEmpty(value))           
+                StaticData.DefaultFoldersSet = bool.Parse(value);            
             // Load the saved value from the App.config file and set the DefaultAESKeys property
             string defaultAESKeys = ConfigurationManager.AppSettings["DefaultAESKeys"];
-            if (!string.IsNullOrEmpty(defaultAESKeys))
-            {
+            if (!string.IsNullOrEmpty(defaultAESKeys))           
                 StaticData.DefaultAESKeys = defaultAESKeys;
-            }
+            
 
         }
 
@@ -49,6 +53,14 @@ namespace SecurityProject
         private void navbar_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selected = navbar.SelectedItem as NavButton;
+
+            if (selected.RequiresDefaultFolders && !StaticData.DefaultFoldersSet)
+            {
+                e.Handled = true;
+                MessageBox.Show("Please set all default folders first.");
+                return;
+            }
+
             navframe.Navigate(selected.Navlink);
 
         }

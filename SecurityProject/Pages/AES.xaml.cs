@@ -62,11 +62,14 @@ namespace SecurityProject.Pages
             StaticData.SelectedAESFile = openPNG.FileName;
             //show image before encryption
             var bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.CacheOption = BitmapCacheOption.OnLoad;
-            bitmap.UriSource = new Uri(openPNG.FileName);
-            bitmap.EndInit();
-            imgResult.Source = bitmap;
+            if (bitmap.BaseUri != null)
+            {
+                bitmap.BeginInit();
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.UriSource = new Uri(openPNG.FileName);
+                bitmap.EndInit();
+                imgResult.Source = bitmap;
+            }
         }
 
         AESEncryption aesEncrypt = new AESEncryption();
