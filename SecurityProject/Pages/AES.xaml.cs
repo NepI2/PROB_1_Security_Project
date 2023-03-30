@@ -58,18 +58,17 @@ namespace SecurityProject.Pages
 
             if (openPNG.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-            }
-            StaticData.SelectedAESFile = openPNG.FileName;
-            //show image before encryption
-            var bitmap = new BitmapImage();
-            if (bitmap.BaseUri != null)
-            {
+                StaticData.SelectedAESFile = openPNG.FileName;
+                //show image before encryption
+                var bitmap = new BitmapImage();
                 bitmap.BeginInit();
                 bitmap.CacheOption = BitmapCacheOption.OnLoad;
                 bitmap.UriSource = new Uri(openPNG.FileName);
                 bitmap.EndInit();
                 imgResult.Source = bitmap;
             }
+            
+           
         }
 
         AESEncryption aesEncrypt = new AESEncryption();
@@ -82,7 +81,6 @@ namespace SecurityProject.Pages
             imgResult.BeginAnimation(Image.OpacityProperty, animation);
 
             aesEncrypt.EncryptStringToBytes_Aes();
-
             // Fade in the image
             animation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(1));
             imgResult.BeginAnimation(Image.OpacityProperty, animation);
