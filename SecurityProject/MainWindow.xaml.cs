@@ -39,47 +39,38 @@ namespace SecurityProject
             if (!string.IsNullOrEmpty(value))
                 StaticData.DefaultFoldersSet = bool.Parse(value);
 
-            // Load the saved value from the App.config file and set the DefaultFileAESEncrypted property
             string defaultFileAESEncrypted = ConfigurationManager.AppSettings["DefaultFileAESEncrypted"];
             if (!string.IsNullOrEmpty(defaultFileAESEncrypted))
                 StaticData.DefaultFileAESEncrypted = defaultFileAESEncrypted;
 
-            // Load the saved value from the App.config file and set the DefaultFileAESDecrypted property
             string defaultFileAESDecrypted = ConfigurationManager.AppSettings["DefaultFileAESDecrypted"];
             if (!string.IsNullOrEmpty(defaultFileAESDecrypted))
                 StaticData.DefaultFileAESDecrypted = defaultFileAESDecrypted;
 
-            // Load the saved value from the App.config file and set the DefaultFileRSAEncrypted property
             string defaultFileRSAEncrypted = ConfigurationManager.AppSettings["DefaultFileRSAEncrypted"];
             if (!string.IsNullOrEmpty(defaultFileRSAEncrypted))
                 StaticData.DefaultFileRSAEncrypted = defaultFileRSAEncrypted;
 
-            // Load the saved value from the App.config file and set the DefaultFileRSADecrypted property
             string defaultFileRSADecrypted = ConfigurationManager.AppSettings["DefaultFileRSADecrypted"];
             if (!string.IsNullOrEmpty(defaultFileRSADecrypted))
                 StaticData.DefaultFileRSADecrypted = defaultFileRSADecrypted;
 
-            // Load the saved value from the App.config file and set the DefaultFileToOpen property
             string defaultFileToOpen = ConfigurationManager.AppSettings["DefaultFileToOpen"];
             if (!string.IsNullOrEmpty(defaultFileToOpen))
                 StaticData.DefaultFileToOpen = defaultFileToOpen;
 
-            // Load the saved value from the App.config file and set the DefaultAESKeys property
             string defaultAESKeys = ConfigurationManager.AppSettings["DefaultAESKeys"];
             if (!string.IsNullOrEmpty(defaultAESKeys))
                 StaticData.DefaultAESKeys = defaultAESKeys;
 
-            // Load the saved value from the App.config file and set the DefaultRSAKeys property
             string defaultRSAKeys = ConfigurationManager.AppSettings["DefaultRSAKeys"];
             if (!string.IsNullOrEmpty(defaultRSAKeys))
                 StaticData.DefaultRSAKeys = defaultRSAKeys;
 
-            // Load the saved value from the App.config file and set the SelectedAESKey property
             string selectedAESKey = ConfigurationManager.AppSettings["SelectedAESKey"];
             if (!string.IsNullOrEmpty(selectedAESKey))
                 StaticData.SelectedAESKey = selectedAESKey;
 
-            // Load the saved value from the App.config file and set the SelectedAESFile property
             string selectedAESFile = ConfigurationManager.AppSettings["SelectedAESFile"];
             if (!string.IsNullOrEmpty(selectedAESFile))
                 StaticData.SelectedAESFile = selectedAESFile;

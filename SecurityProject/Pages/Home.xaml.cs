@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -12,11 +13,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Xml.Linq;
 using AES;
 using Layout;
 using Microsoft.Win32;
+using SecurityProject.RSA;
 
 namespace SecurityProject.Pages
 {
@@ -47,17 +48,18 @@ namespace SecurityProject.Pages
 
         private void generateRSA_Click(object sender, RoutedEventArgs e)
         {
+            RSAEncryption rsaKey = new RSAEncryption();
+            if (txtGenKey.Text == "")
+            {
+                MessageBox.Show("Gelieve een naam mee te geven voor de key");
+            }
+            else
+            {
+                rsaKey.GenerateKeys(txtGenKey.Text);
+            }
+            MessageBox.Show($"{txtGenKey.Text} generated");
+            txtGenKey.Text = string.Empty;
 
-            //using (var rsa = new RSACryptoServiceProvider())
-            //{
-            //    rsa.KeySize = 2048;
-            //    string publicKey = rsa.ToXmlString(true);
-            //    string privetKey = rsa.ToXmlString(false);
-            //    rsa.PersistKeyInCsp = false;
-            //    File.WriteAllText(Path.Combine(StaticData.DefaultRSAKeys, $"{name}_public.xml"), publicKey);
-            //    File.WriteAllText(Path.Combine(StaticData.DefaultRSAKeys, $"{name}_private.xml"), privetKey);
-            //    return true;
-            //}
         }
     }
 }

@@ -12,7 +12,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using SecurityProject.RSA;
 using System.IO;
 using System.ComponentModel;
@@ -25,7 +24,7 @@ namespace SecurityProject.Pages
     /// <summary>
     /// Interaction logic for RSAPage.xaml
     /// </summary>
-    public partial class RSAPage : Page, INotifyPropertyChanged
+    public partial class RSAPage : Page
     {
         public string EncryptedText { get; set; }
         public string DecryptedText { get; set; }
@@ -34,20 +33,7 @@ namespace SecurityProject.Pages
         public RSAPage()
         {
             InitializeComponent();
-            EncryptedTextBox.DataContext = this;
-        }
-        private void ChooseFolder_Click(object sender, RoutedEventArgs e)
-        {
-            var dialog = new OpenFileDialog();
-            dialog.Title = "Select a folder";
-            dialog.Filter = "Folders|*.none";
-            dialog.CheckFileExists = false;
-            dialog.CheckPathExists = true;
-            dialog.FileName = "RSA keys";
-            if (dialog.ShowDialog() == true)
-            {
-                string selectedPath = System.IO.Path.GetDirectoryName(dialog.FileName);
-            }
+            LoadRSAKeys();
         }
 
         private void ChooseFile_Click(object sender, RoutedEventArgs e)
@@ -60,18 +46,13 @@ namespace SecurityProject.Pages
                 _plainText = File.ReadAllText(filePath);
             }
         }
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         private void Encrypt_Click(object sender, RoutedEventArgs e)
         {
             string publicKey = _rsa.GetPublicKey();
             byte[] encryptedData = _rsa.Encrypt(_plainText, publicKey);
             EncryptedText = Convert.ToBase64String(encryptedData);
-            OnPropertyChanged(nameof(EncryptedText));
+            txtEncrypted.Text = EncryptedText;
         }
 
         
@@ -79,8 +60,28 @@ namespace SecurityProject.Pages
         {
             string privatekey = _rsa.GetPrivateKey();
             byte[] encryptedBytes = _rsa.Encrypt(_plainText, privatekey);
-            EncryptedText = Convert.ToBase64String(encryptedBytes);
-            OnPropertyChanged(nameof(DecryptedText));
+            DecryptedText = Convert.ToBase64String(encryptedBytes);
+            txtDecrypted.Text = DecryptedText;
+        }
+
+        private void LoadRSAKeys()
+        {
+            string[] keyFiles = Directory.GetFiles(StaticData.DefaultRSAKeys, "*_public.xml");
+            foreach (string keyFile in keyFiles)
+            {
+                string keyFileName = Path.GetFileNameWithoutExtension(keyFile);
+                KeyComboBox.Items.Add(keyFileName);
+            }
+        }
+
+        private void KeyComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (KeyComboBox.SelectedItem != null)
+            {
+                string selectedKeyFileName = (string)KeyComboBox.SelectedItem;
+                string selectedKeyFilePath = System.IO.Path.Combine(StaticData.DefaultRSAKeys, selectedKeyFileName);
+                StaticData.SelectedAESKey = selectedKeyFilePath;
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Layout;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -19,25 +20,24 @@ namespace SecurityProject.RSA
 
         public void GenerateKeys(string name)
         {
-            //using (var rsa = new RSACryptoServiceProvider())
-            //{
-            //    rsa.KeySize = 2048;
-            //    string publicKey = rsa.ToXmlString(true);
-            //    string privetKey = rsa.ToXmlString(false);
-            //    rsa.PersistKeyInCsp = false;
-            //    File.WriteAllText(Path.Combine(StaticData.DefaultRSAKeys, $"{name}_public.xml"), publicKey);
-            //    File.WriteAllText(Path.Combine(StaticData.DefaultRSAKeys, $"{name}_private.xml"), privetKey);
-            //    return true;
-            //}
+            using (var rsa = new RSACryptoServiceProvider())
+            {
+                rsa.KeySize = 2048;
+                string publicKey = rsa.ToXmlString(true);
+                string privateKey = rsa.ToXmlString(false);
+                rsa.PersistKeyInCsp = false;
+                File.WriteAllText(Path.Combine(StaticData.DefaultRSAKeys, $"{name}_public.xml"), publicKey);
+                File.WriteAllText(Path.Combine(StaticData.DefaultRSAKeys, $"{name}_private.xml"), privateKey);
+            }
 
         }
         public string GetPublicKey()
         {
-            return rsa.ToXmlString(false);
+            return rsa.ToXmlString(true);
         }
         public string GetPrivateKey()
         {
-            return rsa.ToXmlString(true);
+            return rsa.ToXmlString(false);
         }
 
         public byte[] Encrypt(string plainText, string publicKey)

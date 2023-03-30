@@ -8,7 +8,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="RSAPage">
 
-    <Grid>
+    <!--<Grid>
         <Grid.RowDefinitions>
             <RowDefinition  />
             <RowDefinition  />
@@ -35,5 +35,32 @@
         <Button Grid.Row="3" Grid.Column="2" Margin="10" Click="Encrypt_Click">Encrypt</Button>
         <Button Grid.Row="6" Grid.Column="2" Margin="10" Click="Decrypt_Click">Decrypt</Button>
         
+    </Grid>-->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition  />
+            <RowDefinition  />
+            <RowDefinition  />
+            <RowDefinition  />
+            <RowDefinition  />
+            <RowDefinition  />
+            <RowDefinition  />
+            <RowDefinition  />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Label Grid.Column="0" Grid.Row="0" Foreground="White" Content="Choose a file to encrypt" VerticalAlignment="Center" Margin="10" />
+        <Button Grid.Column="2" Grid.Row="0" Margin="10" Click="ChooseFile_Click">Pick File</Button>
+        <Label Grid.Row="1" Grid.Column="0" Foreground="White" Content="Choose a key" VerticalAlignment="Center" Margin="10" />
+        <ComboBox Grid.Row="1" Grid.Column="2" Margin="10" x:Name="KeyComboBox" SelectionChanged="KeyComboBox_SelectionChanged" />
+        <Label Grid.Row="2" Grid.Column="0" Foreground="White" Content="Encrypted text" VerticalAlignment="Center" Margin="10" />
+        <TextBox Grid.Column="1" Grid.Row="2" Grid.RowSpan="3" TextWrapping="Wrap" Margin="10" x:Name="txtEncrypted" />
+        <Label Grid.Row="5" Grid.Column="0" Foreground="White" Content="Decrypted text" VerticalAlignment="Center" Margin="10" />
+        <TextBox Grid.Column="1" Grid.Row="5" Grid.RowSpan="3" Margin="10" x:Name="txtDecrypted"/>
+        <Button Grid.Row="3" Grid.Column="2" Margin="10" Click="Encrypt_Click">Encrypt</Button>
+        <Button Grid.Row="6" Grid.Column="2" Margin="10" Click="Decrypt_Click">Decrypt</Button>
     </Grid>
 </Page>
