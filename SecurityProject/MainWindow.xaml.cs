@@ -39,9 +39,7 @@ namespace SecurityProject
             // Load the saved value from the App.config file and set the DefaultAESKeys property
             string defaultAESKeys = ConfigurationManager.AppSettings["DefaultAESKeys"];
             if (!string.IsNullOrEmpty(defaultAESKeys))           
-                StaticData.DefaultAESKeys = defaultAESKeys;
-            
-
+                StaticData.DefaultAESKeys = defaultAESKeys;           
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)

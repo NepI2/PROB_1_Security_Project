@@ -19,6 +19,53 @@ namespace SecurityProject
 
         public static void UpdateDefaultFoldersSet()
         {
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+            if (DefaultFileAESEncrypted != null)
+            {
+                config.AppSettings.Settings["DefaultFileAESEncrypted"].Value = DefaultFileAESEncrypted;
+            }
+
+            if (DefaultFileAESDecrypted != null)
+            {
+                config.AppSettings.Settings["DefaultFileAESDecrypted"].Value = DefaultFileAESDecrypted;
+            }
+
+            if (DefaultFileRSAEncrypted != null)
+            {
+                config.AppSettings.Settings["DefaultFileRSAEncrypted"].Value = DefaultFileRSAEncrypted;
+            }
+
+            if (DefaultFileRSADecrypted != null)
+            {
+                config.AppSettings.Settings["DefaultFileRSADecrypted"].Value = DefaultFileRSADecrypted;
+            }
+
+            if (DefaultFileToOpen != null)
+            {
+                config.AppSettings.Settings["DefaultFileToOpen"].Value = DefaultFileToOpen;
+            }
+
+            if (DefaultAESKeys != null)
+            {
+                config.AppSettings.Settings["DefaultAESKeys"].Value = DefaultAESKeys;
+            }
+
+            if (DefaultRSAKeys != null)
+            {
+                config.AppSettings.Settings["DefaultRSAKeys"].Value = DefaultRSAKeys;
+            }
+
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appSettings");
+
+            UpdateDefaultFoldersSetStatus();
+        }
+
+        private static void UpdateDefaultFoldersSetStatus()
+        {
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
             if (DefaultFileAESEncrypted != null &&
                 DefaultFileAESDecrypted != null &&
                 DefaultFileRSAEncrypted != null &&
@@ -27,16 +74,20 @@ namespace SecurityProject
                 DefaultAESKeys != null &&
                 DefaultRSAKeys != null)
             {
-                Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
                 config.AppSettings.Settings["DefaultFoldersSet"].Value = "true";
-                config.Save(ConfigurationSaveMode.Modified);
-                ConfigurationManager.RefreshSection("appSettings");
                 DefaultFoldersSet = true;
             }
             else
             {
+                config.AppSettings.Settings["DefaultFoldersSet"].Value = "false";
                 DefaultFoldersSet = false;
             }
+
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appSettings");
         }
+
+
     }
 }
+
