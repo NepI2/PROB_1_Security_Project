@@ -45,6 +45,18 @@ namespace SecurityProject.Pages
                 string filePath = dialog.FileName;
                 _plainText = File.ReadAllText(filePath);
             }
+
+            //OpenFileDialog openXML = new OpenFileDialog();
+
+            //openXML.InitialDirectory = StaticData.DefaultAESKeys;
+            //openXML.Filter = "xml files (*.xml)|*.xml";
+            //openXML.FilterIndex = 2;
+            //openXML.RestoreDirectory = true;
+
+            //if (openXML.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            //{
+            //}
+            //StaticData.SelectedAESKey = openXML.FileName;
         }
 
         private void Encrypt_Click(object sender, RoutedEventArgs e)
@@ -80,7 +92,7 @@ namespace SecurityProject.Pages
             if (KeyComboBox.SelectedItem != null)
             {
                 string selectedKeyFileName = (string)KeyComboBox.SelectedItem;
-                string selectedKeyFilePath = System.IO.Path.Combine(StaticData.DefaultRSAKeys, selectedKeyFileName);
+                string selectedKeyFilePath = Path.Combine(StaticData.DefaultRSAKeys, selectedKeyFileName);
                 StaticData.SelectedAESKey = selectedKeyFilePath;
             }
         }

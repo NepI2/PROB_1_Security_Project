@@ -29,7 +29,6 @@ namespace SecurityProject.RSA
             string privateKeyPath = Path.Combine(StaticData.DefaultRSAKeys, $"{name}_private.xml");
             if (File.Exists(publicKeyPath) && File.Exists(privateKeyPath))
             {
-                // Keys already exist, no need to generate new ones
                 return;
             }
 
@@ -64,7 +63,6 @@ namespace SecurityProject.RSA
 
         public string Encrypt(string plainText, string publicKey)
         {
-            rsa = new RSACryptoServiceProvider();
             rsa.ImportParameters(_pubKey);
             var data = Encoding.UTF8.GetBytes(plainText);
             var cypher = rsa.Encrypt(data, false);
