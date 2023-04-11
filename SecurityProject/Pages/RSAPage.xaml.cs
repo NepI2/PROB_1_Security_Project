@@ -87,7 +87,7 @@ namespace SecurityProject.Pages
                 string privatekey = _rsa.GetPrivateKey(KeyComboBoxRSA.SelectedItem.ToString());
                 string encryptedBytes = EncryptedText;
                 DecryptedText = _rsa.Decrypt(encryptedBytes, privatekey);
-                txtDecrypted.Text = encryptedBytes;
+                txtDecrypted.Text = DecryptedText;
             }
         }
 
@@ -119,8 +119,9 @@ namespace SecurityProject.Pages
             if (KeyComboBox.SelectedItem != null)
             {
                 string selectedKeyFileName = (string)KeyComboBox.SelectedItem;
-                string selectedKeyFilePath = Path.Combine(StaticData.DefaultRSAKeys, selectedKeyFileName);
-                StaticData.SelectedRSAKey = selectedKeyFilePath;
+                string selectedKeyFilePath = Path.Combine(StaticData.DefaultAESKeys, selectedKeyFileName);
+                StaticData.SelectedAESKey = selectedKeyFilePath;
+                _plainText = File.ReadAllText(selectedKeyFilePath);
             }
         }
 
@@ -129,8 +130,8 @@ namespace SecurityProject.Pages
             if (KeyComboBoxRSA.SelectedItem != null)
             {
                 string selectedKeyFileName = (string)KeyComboBoxRSA.SelectedItem;
-                string selectedKeyFilePath = Path.Combine(StaticData.DefaultAESKeys, selectedKeyFileName);
-                StaticData.SelectedAESKey = selectedKeyFilePath;
+                string selectedKeyFilePath = Path.Combine(StaticData.DefaultRSAKeys, selectedKeyFileName);
+                StaticData.SelectedRSAKey = selectedKeyFilePath;
             }            
         }
 

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls.Ribbon;
 using System.Xml;
 using System.Xml.Serialization;
@@ -63,22 +64,39 @@ namespace SecurityProject.RSA
 
         public string Encrypt(string plainText, string publicKey)
         {
-            rsa.ImportParameters(_pubKey);
-            var data = Encoding.UTF8.GetBytes(plainText);
-            var cypher = rsa.Encrypt(data, false);
-            return Convert.ToBase64String(cypher);
-            //rsa.FromXmlString(publicKey);
-            //byte[] plainBytes = Encoding.UTF8.GetBytes(plainText);
-            //byte[] encryptedBytes = rsa.Encrypt(plainBytes, true);
-            //return encryptedBytes;
+            //rsa.ImportParameters(_pubKey);
+            //var data = Encoding.UTF8.GetBytes(plainText);
+            //var cypher = rsa.Encrypt(data, false);
+            //return Convert.ToBase64String(cypher);
+            try
+            {
+                rsa.ImportParameters(_pubKey);
+                var data = Encoding.Default.GetBytes(plainText);
+                var cypher = rsa.Encrypt(data, false);
+                return Convert.ToBase64String(cypher);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Encryption failed: " + ex.Message);
+                return null; // or throw a custom exception
+            }           
         }
 
         public string Decrypt(string cypherText, string privateKey)
         {
-            var dataBytes = Convert.FromBase64String(cypherText);
-            rsa.ImportParameters(_privKey);
-            var plainText = rsa.Decrypt(dataBytes, false);
-            return Encoding.UTF8.GetString(rsa.Decrypt(dataBytes, false));
+            try
+            {
+                var dataBytes = Convert.FromBase64String(cypherText);
+                rsa.ImportParameters(_privKey);
+                var plainText = rsa.Decrypt(dataBytes, false);
+                return Encoding.Default.GetString(plainText);
+            }
+            catch (CryptographicException ex)
+            {
+                MessageBox.Show("Decryption failed: " + ex.Message);
+                return null; // or throw a custom exception
+            }
+
             //rsa.FromXmlString(privateKey);
             //byte[] decryptedBytes = rsa.Decrypt(encryptedBytes, true);
             //string decryptedText = Encoding.UTF8.GetString(decryptedBytes);
