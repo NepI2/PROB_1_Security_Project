@@ -76,36 +76,42 @@ namespace SecurityProject.Pages
 
         private void Encrypt_Click(object sender, RoutedEventArgs e)
         {
-            // Fade out the image
-            DoubleAnimation animation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(1));
-            imgResult.BeginAnimation(Image.OpacityProperty, animation);
+            if (StaticData.SelectedAESFile != null && StaticData.SelectedAESKey != null)
+            {
+                // Fade out the image
+                DoubleAnimation animation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(1));
+                imgResult.BeginAnimation(Image.OpacityProperty, animation);
 
-            aesEncrypt.EncryptStringToBytes_Aes();
-            // Fade in the image
-            animation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(1));
-            imgResult.BeginAnimation(Image.OpacityProperty, animation);
+                aesEncrypt.EncryptStringToBytes_Aes();
+                // Fade in the image
+                animation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(1));
+                imgResult.BeginAnimation(Image.OpacityProperty, animation);
+            }
         }
 
         private void Decrypt_Click(object sender, RoutedEventArgs e)
         {
 
-            // Fade out the image
-            DoubleAnimation animation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(1));
-            imgResult.BeginAnimation(Image.OpacityProperty, animation);
-
-            byte[] decrypted = aesDecrypt.DecryptBytesFromBytes_Aes();
-            using (MemoryStream ms = new MemoryStream(decrypted))
+            if (StaticData.SelectedAESFile != null && StaticData.SelectedAESKey != null)
             {
-                using (System.Drawing.Image image = System.Drawing.Image.FromStream(ms))
+                // Fade out the image
+                DoubleAnimation animation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(1));
+                imgResult.BeginAnimation(Image.OpacityProperty, animation);
+
+                byte[] decrypted = aesDecrypt.DecryptBytesFromBytes_Aes();
+                using (MemoryStream ms = new MemoryStream(decrypted))
                 {
-                    string temp = Microsoft.VisualBasic.Interaction.InputBox("Enter file name", "Decryption ready!", "");
-                    image.Save($"{StaticData.DefaultFileAESDecrypted}/{Path.GetFileNameWithoutExtension(temp)}.png", System.Drawing.Imaging.ImageFormat.Png);
-                    imgResult.Source = new BitmapImage(new Uri($"{StaticData.DefaultFileAESDecrypted}/{Path.GetFileNameWithoutExtension(temp)}.png"));
+                    using (System.Drawing.Image image = System.Drawing.Image.FromStream(ms))
+                    {
+                        string temp = Microsoft.VisualBasic.Interaction.InputBox("Enter file name", "Decryption ready!", "");
+                        image.Save($"{StaticData.DefaultFileAESDecrypted}/{Path.GetFileNameWithoutExtension(temp)}.png", System.Drawing.Imaging.ImageFormat.Png);
+                        imgResult.Source = new BitmapImage(new Uri($"{StaticData.DefaultFileAESDecrypted}/{Path.GetFileNameWithoutExtension(temp)}.png"));
+                    }
                 }
+                // Fade in the image
+                animation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(1));
+                imgResult.BeginAnimation(Image.OpacityProperty, animation);
             }
-            // Fade in the image
-            animation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(1));
-            imgResult.BeginAnimation(Image.OpacityProperty, animation);
         }
 
         private void SelectKey_Click(object sender, RoutedEventArgs e)
