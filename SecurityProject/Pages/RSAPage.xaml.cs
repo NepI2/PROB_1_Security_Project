@@ -62,19 +62,33 @@ namespace SecurityProject.Pages
 
         private void Encrypt_Click(object sender, RoutedEventArgs e)
         {
-            string publicKey = _rsa.GetPublicKey();
-            string encryptedData = _rsa.Encrypt(_plainText, publicKey);
-            EncryptedText = encryptedData;
-            txtEncrypted.Text = EncryptedText;
+            if (KeyComboBox.SelectedItem == null || KeyComboBoxRSA.SelectedItem == null)
+            {
+                MessageBox.Show("Selecteer de juiste sleutels in de dropdowns");
+            }
+            else
+            {
+                string publicKey = _rsa.GetPublicKey();
+                string encryptedData = _rsa.Encrypt(_plainText, publicKey);
+                EncryptedText = encryptedData;
+                txtEncrypted.Text = EncryptedText;
+            }
         }
 
 
         private void Decrypt_Click(object sender, RoutedEventArgs e)
         {
-            string privatekey = _rsa.GetPrivateKey(KeyComboBoxRSA.SelectedItem.ToString());
-            string encryptedBytes = EncryptedText;
-            DecryptedText = _rsa.Decrypt(encryptedBytes, privatekey);
-            txtDecrypted.Text = encryptedBytes;
+            if (KeyComboBox.SelectedItem == null || KeyComboBoxRSA.SelectedItem == null)
+            {
+                MessageBox.Show("Selecteer de juiste sleutels in de dropdowns");
+            }
+            else if (EncryptedText != null)
+            {
+                string privatekey = _rsa.GetPrivateKey(KeyComboBoxRSA.SelectedItem.ToString());
+                string encryptedBytes = EncryptedText;
+                DecryptedText = _rsa.Decrypt(encryptedBytes, privatekey);
+                txtDecrypted.Text = encryptedBytes;
+            }
         }
 
 
