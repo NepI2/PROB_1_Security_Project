@@ -32,7 +32,6 @@ namespace SecurityProject.RSA
             {
                 return;
             }
-
             rsa.KeySize = 2048;
             string publicKey = rsa.ToXmlString(false);
             string privateKey = rsa.ToXmlString(true);
@@ -46,7 +45,6 @@ namespace SecurityProject.RSA
             var xs = new XmlSerializer(typeof(RSAParameters));
             xs.Serialize(sw, _pubKey);
             return sw.ToString();
-            //return rsa.ToXmlString(false);
         }
         public string GetPrivateKey(string name)
         {
@@ -64,10 +62,6 @@ namespace SecurityProject.RSA
 
         public string Encrypt(string plainText, string publicKey)
         {
-            //rsa.ImportParameters(_pubKey);
-            //var data = Encoding.UTF8.GetBytes(plainText);
-            //var cypher = rsa.Encrypt(data, false);
-            //return Convert.ToBase64String(cypher);
             try
             {
                 rsa.ImportParameters(_pubKey);
@@ -78,7 +72,7 @@ namespace SecurityProject.RSA
             catch (Exception ex)
             {
                 MessageBox.Show("Encryption failed: " + ex.Message);
-                return null; // or throw a custom exception
+                return null;
             }           
         }
 
@@ -94,13 +88,8 @@ namespace SecurityProject.RSA
             catch (CryptographicException ex)
             {
                 MessageBox.Show("Decryption failed: " + ex.Message);
-                return null; // or throw a custom exception
+                return null;
             }
-
-            //rsa.FromXmlString(privateKey);
-            //byte[] decryptedBytes = rsa.Decrypt(encryptedBytes, true);
-            //string decryptedText = Encoding.UTF8.GetString(decryptedBytes);
-            //return decryptedText;
         }
     }
 }

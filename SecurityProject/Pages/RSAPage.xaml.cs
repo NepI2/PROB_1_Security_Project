@@ -37,29 +37,6 @@ namespace SecurityProject.Pages
             LoadAESKeys();
         }
 
-        private void ChooseFile_Click(object sender, RoutedEventArgs e)
-        {
-            var dialog = new OpenFileDialog();
-            dialog.Filter = "Text Files|*.txt";
-            if (dialog.ShowDialog() == true)
-            {
-                string filePath = dialog.FileName;
-                _plainText = File.ReadAllText(filePath);
-            }
-
-            //OpenFileDialog openXML = new OpenFileDialog();
-
-            //openXML.InitialDirectory = StaticData.DefaultAESKeys;
-            //openXML.Filter = "xml files (*.xml)|*.xml";
-            //openXML.FilterIndex = 2;
-            //openXML.RestoreDirectory = true;
-
-            //if (openXML.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            //{
-            //}
-            //StaticData.SelectedAESKey = openXML.FileName;
-        }
-
         private void Encrypt_Click(object sender, RoutedEventArgs e)
         {
             if (KeyComboBox.SelectedItem == null || KeyComboBoxRSA.SelectedItem == null)
@@ -75,7 +52,6 @@ namespace SecurityProject.Pages
             }
         }
 
-
         private void Decrypt_Click(object sender, RoutedEventArgs e)
         {
             if (KeyComboBox.SelectedItem == null || KeyComboBoxRSA.SelectedItem == null)
@@ -90,7 +66,6 @@ namespace SecurityProject.Pages
                 txtDecrypted.Text = DecryptedText;
             }
         }
-
 
         private void LoadRSAKeys()
         {
