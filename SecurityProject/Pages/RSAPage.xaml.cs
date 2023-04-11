@@ -34,6 +34,7 @@ namespace SecurityProject.Pages
         {
             InitializeComponent();
             LoadRSAKeys();
+            LoadAESKeys();
         }
 
         private void ChooseFile_Click(object sender, RoutedEventArgs e)
@@ -70,10 +71,10 @@ namespace SecurityProject.Pages
 
         private void Decrypt_Click(object sender, RoutedEventArgs e)
         {
-            string privatekey = _rsa.GetPrivateKey(KeyComboBox.SelectedItem.ToString());
+            string privatekey = _rsa.GetPrivateKey(KeyComboBoxRSA.SelectedItem.ToString());
             string encryptedBytes = EncryptedText;
             DecryptedText = _rsa.Decrypt(encryptedBytes, privatekey);
-            txtDecrypted.Text = DecryptedText;
+            txtDecrypted.Text = encryptedBytes;
         }
 
 
@@ -83,7 +84,19 @@ namespace SecurityProject.Pages
             foreach (string keyFile in keyFiles)
             {
                 string keyFileName = Path.GetFileNameWithoutExtension(keyFile);
-                KeyComboBox.Items.Add(keyFileName);
+                KeyComboBoxRSA.Items.Add(keyFileName);
+            }
+        }
+
+        private void LoadAESKeys()
+        {
+            // Get the RSA key files from the default folder
+            string[] keyFiles = Directory.GetFiles(StaticData.DefaultAESKeys, "*.xml");
+
+            // Add the file names to the ComboBox
+            foreach (string keyFile in keyFiles)
+            {
+                KeyComboBox.Items.Add(System.IO.Path.GetFileName(keyFile));
             }
         }
 
@@ -93,8 +106,18 @@ namespace SecurityProject.Pages
             {
                 string selectedKeyFileName = (string)KeyComboBox.SelectedItem;
                 string selectedKeyFilePath = Path.Combine(StaticData.DefaultRSAKeys, selectedKeyFileName);
-                StaticData.SelectedAESKey = selectedKeyFilePath;
+                StaticData.SelectedRSAKey = selectedKeyFilePath;
             }
+        }
+
+        private void KeyComboBoxRSA_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {          
+            if (KeyComboBoxRSA.SelectedItem != null)
+            {
+                string selectedKeyFileName = (string)KeyComboBoxRSA.SelectedItem;
+                string selectedKeyFilePath = Path.Combine(StaticData.DefaultAESKeys, selectedKeyFileName);
+                StaticData.SelectedAESKey = selectedKeyFilePath;
+            }            
         }
     }
 }

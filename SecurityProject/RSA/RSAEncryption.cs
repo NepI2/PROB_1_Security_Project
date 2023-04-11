@@ -78,7 +78,7 @@ namespace SecurityProject.RSA
             var dataBytes = Convert.FromBase64String(cypherText);
             rsa.ImportParameters(_privKey);
             var plainText = rsa.Decrypt(dataBytes, false);
-            return Encoding.UTF8.GetString(plainText);
+            return Encoding.UTF8.GetString(rsa.Decrypt(dataBytes, false));
             //rsa.FromXmlString(privateKey);
             //byte[] decryptedBytes = rsa.Decrypt(encryptedBytes, true);
             //string decryptedText = Encoding.UTF8.GetString(decryptedBytes);

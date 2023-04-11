@@ -11,6 +11,7 @@ namespace SecurityProject
         public static string? DefaultFileToOpen { get; set; }
         public static string? DefaultAESKeys { get; set; }
         public static string? DefaultRSAKeys { get; set; }
+        public static string? SelectedRSAKey { get; set; }
         public static string? SelectedAESKey { get; set; }
         public static string? SelectedAESFile { get; set; }
 
