@@ -69,7 +69,7 @@ namespace SecurityProject.Pages
 
         private void LoadRSAKeys()
         {
-            string[] keyFiles = Directory.GetFiles(StaticData.DefaultRSAKeys, "*_public.xml");
+            string[] keyFiles = Directory.GetFiles(StaticData.DefaultRSAKeys, "*.xml");
             foreach (string keyFile in keyFiles)
             {
                 string keyFileName = Path.GetFileNameWithoutExtension(keyFile);
