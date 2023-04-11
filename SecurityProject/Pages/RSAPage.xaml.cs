@@ -136,18 +136,21 @@ namespace SecurityProject.Pages
 
         private void SaveAES_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-            saveFileDialog1.Filter = "XML|*.xml";
-            saveFileDialog1.Title = "Save your encrypted AES key";
-            saveFileDialog1.ShowDialog();
-
-            if (saveFileDialog1.FileName != "")
+            if (txtEncrypted.Text != "")
             {
-                System.IO.FileStream fs =
-                    (System.IO.FileStream)saveFileDialog1.OpenFile();
+                SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+                saveFileDialog1.Filter = "XML|*.xml";
+                saveFileDialog1.Title = "Save your encrypted AES key";
+                saveFileDialog1.ShowDialog();
 
-                fs.Close();
+                if (saveFileDialog1.FileName != "")
+                {
+                    System.IO.FileStream fs =
+                        (System.IO.FileStream)saveFileDialog1.OpenFile();
 
+                    fs.Close();
+
+                }
             }
         }
     }

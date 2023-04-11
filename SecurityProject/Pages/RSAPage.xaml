@@ -442,9 +442,9 @@
         <Label Grid.Row="1" Grid.Column="0" Foreground="White" Content="Choose a AES key to encrypt" VerticalAlignment="Center" Margin="10" />
         <ComboBox Style="{DynamicResource ComboBoxStyleRounded}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" Grid.Column="2" Margin="10" x:Name="KeyComboBox" SelectionChanged="KeyComboBox_SelectionChanged" />
         <Label Grid.Row="2" Grid.Column="0" Foreground="White" Content="Encrypted AES key" VerticalAlignment="Center" Margin="10" />
-        <TextBox Style="{DynamicResource TextBoxStyleRounded}" Padding="5" Grid.Column="0" Grid.Row="3" Grid.RowSpan="2" Grid.ColumnSpan="2" TextWrapping="Wrap" Margin="10" x:Name="txtEncrypted" />
+        <TextBox IsEnabled="False" Style="{DynamicResource TextBoxStyleRounded}" Padding="5" Grid.Column="0" Grid.Row="3" Grid.RowSpan="2" Grid.ColumnSpan="2" TextWrapping="Wrap" Margin="10" x:Name="txtEncrypted" />
         <Label Grid.Row="5" Grid.Column="0" Foreground="White" Content="Decrypted AES key" VerticalAlignment="Center" Margin="10" />
-        <TextBox Style="{DynamicResource TextBoxStyleRounded}" Padding="5" TextWrapping="Wrap" Grid.Column="0" Grid.RowSpan="2" Grid.Row="6" Grid.ColumnSpan="2" Margin="10" x:Name="txtDecrypted"/>
+        <TextBox IsEnabled="False" Style="{DynamicResource TextBoxStyleRounded}" Padding="5" TextWrapping="Wrap" Grid.Column="0" Grid.RowSpan="2" Grid.Row="6" Grid.ColumnSpan="2" Margin="10" x:Name="txtDecrypted"/>
         <Button Style="{DynamicResource RoundedButton}" Grid.Row="3" Grid.Column="2" Margin="10" Click="Encrypt_Click">Encrypt</Button>
         <Button Style="{DynamicResource RoundedButton}" Grid.Row="6" Grid.Column="2" Margin="10" Click="Decrypt_Click">Decrypt</Button>
         <Button Style="{DynamicResource RoundedButton}" Grid.Row="4" Grid.Column="2" Margin="10" Name="SaveAES" Click="SaveAES_Click">Save AES encryption</Button>
