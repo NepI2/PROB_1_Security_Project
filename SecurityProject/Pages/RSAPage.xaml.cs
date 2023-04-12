@@ -52,7 +52,7 @@ namespace SecurityProject.Pages
         {
             if (KeyComboBox.SelectedItem == null || KeyComboBoxRSA.SelectedItem == null)
             {
-                MessageBox.Show("Selecteer de juiste sleutels in de dropdowns");
+                MessageBox.Show("Select the correct keys in the dropdowns");
             }
             else
             {
@@ -69,7 +69,7 @@ namespace SecurityProject.Pages
         {
             if (KeyComboBoxRSA.SelectedItem == null && EncryptedText != null)
             {
-                MessageBox.Show("Selecteer de juiste sleutels in de RSA dropdowns of kies een geencrepteerde");
+                MessageBox.Show("Select the correct keys in the dropdowns");
             }
             else if (EncryptedText != null)
             {

@@ -36,13 +36,13 @@ namespace SecurityProject.Pages
             AESEncryption aeskey = new AESEncryption();
             if (txtGenKey.Text == "")
             {
-                MessageBox.Show("Gelieve een naam mee te geven voor de key");
+                MessageBox.Show("Please enter a name for the key");
             }
             else
             {
                 aeskey.GenerateKeys(txtGenKey.Text);
             }
-            MessageBox.Show($"{txtGenKey.Text} generated");
+            MessageBox.Show($"Key {txtGenKey.Text} is generated");
             txtGenKey.Text = string.Empty;
         }
 
@@ -51,13 +51,13 @@ namespace SecurityProject.Pages
             RSAEncryption rsaKey = new RSAEncryption();
             if (txtGenKey.Text == "")
             {
-                MessageBox.Show("Gelieve een naam mee te geven voor de key");
+                MessageBox.Show("Please enter a name for the key");
             }
             else
             {
                 rsaKey.GenerateKeys(txtGenKey.Text);
             }
-            MessageBox.Show($"{txtGenKey.Text} generated");
+            MessageBox.Show($"Key {txtGenKey.Text} is generated");
             txtGenKey.Text = string.Empty;
 
         }
