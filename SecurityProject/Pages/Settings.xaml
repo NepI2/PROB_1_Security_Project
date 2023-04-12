@@ -9,53 +9,7 @@
       Title="Settings">
 
     <Grid>
-        <!--<StackPanel HorizontalAlignment="Center" Orientation="Vertical">
-            <StackPanel Margin="10" Orientation="Horizontal">
-                <Label>Choose default folder for RSA Key :</Label>
-                <Button
-                            x:Name="RSAKeysFolderBtn"
-                            Padding="5"
-                            Click="RSAKeysFolderBtn_Click">
-                    Choose folder
-                </Button>
-            </StackPanel>
-            <StackPanel Margin="10" Orientation="Horizontal">
-                <Label>Choose default folder for AES Key :</Label>
-                <Button
-                            x:Name="AESKeysFolderBtn"
-                            Padding="5"
-                            Click="AESKeysFolderBtn_Click">
-                    Choose folder
-                </Button>
-            </StackPanel>
-            <StackPanel Margin="10" Orientation="Horizontal">
-                <Label>Choose default folder for Encrypted files :</Label>
-                <Button
-                            x:Name="EncriptedFilesFolderBtn"
-                            Padding="5"
-                            Click="EncriptedFilesFolderBtn_Click">
-                    Choose folder
-                </Button>
-            </StackPanel>
-            <StackPanel Margin="10" Orientation="Horizontal">
-                <Label>Choose default folder for Decrypted files :</Label>
-                <Button
-                            x:Name="DecriptedFilesFolderBtn"
-                            Padding="5"
-                            Click="DecriptedFilesFolderBtn_Click">
-                    Choose folder
-                </Button>
-            </StackPanel>
-            <StackPanel Margin="10" Orientation="Horizontal">
-                <Label>Choose default folder for Choosing files :</Label>
-                <Button
-                            x:Name="ChoosingFilesFolderBtn"
-                            Padding="5"
-                            Click="ChoosingFilesFolderBtn_Click">
-                    Choose folder
-                </Button>
-            </StackPanel>
-        </StackPanel>-->
+        
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -78,7 +32,8 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Foreground="White" Grid.Column="0" Text="RSA Key:" VerticalAlignment="Center" />
-                <Button Grid.Column="2" x:Name="RSAKeysFolderBtn" Padding="5" Click="RSAKeysFolderBtn_Click">
+                <TextBlock Foreground="White" Grid.Column="1" Name="RSAKeyPlaceholder" Margin="10 0 0 0"  VerticalAlignment="Center" ></TextBlock>
+                <Button Style="{DynamicResource RoundedButton}" Grid.Column="2" x:Name="RSAKeysFolderBtn" Padding="5" Width="200" Click="RSAKeysFolderBtn_Click">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Choose Folder" />
                         <!--<SymbolIcon Symbol="FolderOpen" Margin="5,0,0,0" />-->
@@ -92,8 +47,9 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Foreground="White" Grid.Column="0" Text="AES Key:" VerticalAlignment="Center" />
-                <Button Grid.Column="2" x:Name="AESKeysFolderBtn" Padding="5" Click="AESKeysFolderBtn_Click">
+                <TextBlock Foreground="White" Grid.Column="0" Text="AES Key:" VerticalAlignment="Center"  />
+                <TextBlock  Foreground="White" Grid.Column="1" Name="AESKeyPlaceholder" Margin="10 0 0 0"  VerticalAlignment="Center" ></TextBlock>
+                <Button Grid.Column="2" x:Name="AESKeysFolderBtn"  Style="{DynamicResource RoundedButton}" Padding="5" Click="AESKeysFolderBtn_Click" Width="200">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Choose Folder" />
                         <!--<SymbolIcon Symbol="FolderOpen" Margin="5,0,0,0" />-->
@@ -108,7 +64,8 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Foreground="White" Grid.Column="0" Text="Encrypted files:" VerticalAlignment="Center" />
-                <Button Grid.Column="2" x:Name="EncriptedFilesFolder" Padding="5" Click="EncriptedFilesFolderBtn_Click">
+                <TextBlock Foreground="White" Grid.Column="1" Name="EncryptedFilesPlaceholder" Margin="10 0 0 0"  VerticalAlignment="Center" ></TextBlock>
+                <Button Grid.Column="2" x:Name="EncriptedFilesFolder" Width="200"  Style="{DynamicResource RoundedButton}" Padding="5" Click="EncriptedFilesFolderBtn_Click">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Choose Folder" />
                         <!--<SymbolIcon Symbol="FolderOpen" Margin="5,0,0,0" />-->
@@ -123,7 +80,8 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Foreground="White" Grid.Column="0" Text="Decrypted files:" VerticalAlignment="Center" />
-                <Button Grid.Column="2" x:Name="DecriptedFilesFolder" Padding="5" Click="DecriptedFilesFolderBtn_Click">
+                <TextBlock Foreground="White" Grid.Column="1" Name="DecryptedFilesPlaceholder" Margin="10 0 0 0"  VerticalAlignment="Center" ></TextBlock>
+                <Button Grid.Column="2" x:Name="DecriptedFilesFolder" Width="200"  Style="{DynamicResource RoundedButton}" Padding="5" Click="DecriptedFilesFolderBtn_Click">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Choose Folder" />
                         <!--<SymbolIcon Symbol="FolderOpen" Margin="5,0,0,0" />-->
@@ -138,7 +96,8 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Foreground="White" Grid.Column="0" Text="Choosing files:" VerticalAlignment="Center" />
-                <Button Grid.Column="2" x:Name="ChoosingFilesFolder" Padding="5" Click="ChoosingFilesFolderBtn_Click">
+                <TextBlock Foreground="White" Grid.Column="1" Name="ChoosingFilesPlaceholder" Margin="10 0 0 0"  VerticalAlignment="Center" ></TextBlock>
+                <Button Grid.Column="2" x:Name="ChoosingFilesFolder"  Style="{DynamicResource RoundedButton}" Width="200" Padding="5" Click="ChoosingFilesFolderBtn_Click">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Choose Folder" />
                         <!--<SymbolIcon Symbol="FolderOpen" Margin="5,0,0,0" />-->

@@ -88,7 +88,6 @@ namespace SecurityProject
             ConfigurationManager.RefreshSection("appSettings");
         }
 
-
     }
 }
 

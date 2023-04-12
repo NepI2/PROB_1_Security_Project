@@ -8,23 +8,21 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Home">
 
-    <Grid>
+    <StackPanel Orientation="Vertical" Margin="20">
+        <TextBlock HorizontalAlignment="Center" Foreground="#1985a1" FontSize="20" FontWeight="Bold" Margin="10">Welcome to this encryption tool!</TextBlock>
         <TextBlock 
             HorizontalAlignment="Center" 
-            VerticalAlignment="Center" 
             Foreground="#1985a1" 
-            FontSize="30" 
+            FontSize="20" 
             TextWrapping="Wrap"
-            Width="700">
-            Welcome to this encryption tool! <LineBreak/> 
-            With this app you can encrypt and decrypt with AES and RSA encryption and save your keys in XML format. <LineBreak/>
-            Whether you're looking to encrypt or decrypt.<LineBreak/>
-            This app has got you covered. <LineBreak/>
+            Margin="30"
+            Width="400">With this app you can encrypt and decrypt with AES and RSA encryption and save your keys in XML format</TextBlock>
+        <Label Foreground="White" HorizontalAlignment="Center">Please enter the name of the key</Label>
+        <TextBox x:Name ="txtGenKey" Height="30" Width="250"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Margin="10" Height="30" Width="150" Style="{DynamicResource RoundedButton}" Content="generate AES key" x:Name="generateAES" Click="generateAES_Click"></Button>
+            <Button Margin="10" Height="30" Width="150" Style="{DynamicResource RoundedButton}" x:Name="generateRSA" Click="generateRSA_Click" >generate RSA key</Button>
+        </StackPanel>
 
-        </TextBlock>
-        <TextBox x:Name ="txtGenKey" Height="30" Margin="175,340,275,80"/>
-        <Button Height="30" Width="150" Margin="0,330,300,0" Content="generate AES key" x:Name="generateAES" Click="generateAES_Click"></Button>
-        <Button Height="30" Width="150" Margin="0,330,-100,0" Content="generate RSA key" x:Name="generateRSA" Click="generateRSA_Click" ></Button>
-
-    </Grid>
+    </StackPanel>
 </Page>

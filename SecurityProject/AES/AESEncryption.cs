@@ -24,7 +24,7 @@ namespace AES
             doc.AppendChild(root);
 
             // Save XML document to file
-            doc.Save($"{StaticData.DefaultAESKeys}/{name}.xml");
+            doc.Save($"{StaticData.DefaultAESKeys}/{name}_aes.xml");
         }
         public byte[] EncryptStringToBytes_Aes()
         {

@@ -8,21 +8,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls.Ribbon;
-using System.Xml;
-using System.Xml.Serialization;
+
+
 
 namespace SecurityProject.RSA
 {
     public class RSAEncryption
     {
         private RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
-        private RSAParameters _privKey;
-        private RSAParameters _pubKey;
-        public RSAEncryption()
+        //private RSAParameters _privKey;
+        //private RSAParameters _pubKey;
+        public RSAEncryption()
         {
-            _privKey = rsa.ExportParameters(true);
-            _pubKey = rsa.ExportParameters(false);
-        }
+            //_privKey = rsa.ExportParameters(true);
+            //_pubKey = rsa.ExportParameters(false);
+        }
+
+
 
         public void GenerateKeys(string name)
         {
@@ -39,13 +41,22 @@ namespace SecurityProject.RSA
             File.WriteAllText(publicKeyPath, publicKey);
             File.WriteAllText(privateKeyPath, privateKey);
         }
-        public string GetPublicKey()
+        public string GetPublicKey(string name)
         {
-            var sw = new StringWriter();
-            var xs = new XmlSerializer(typeof(RSAParameters));
-            xs.Serialize(sw, _pubKey);
-            return sw.ToString();
-        }
+            //var sw = new StringWriter();
+            //var xs = new XmlSerializer(typeof(RSAParameters));
+            //xs.Serialize(sw, _pubKey);
+            string publicKeyPath = Path.Combine(StaticData.DefaultRSAKeys, $"{name}.xml");
+            if (File.Exists(publicKeyPath))
+            {
+                return File.ReadAllText(publicKeyPath);
+            }
+            else
+            {
+                throw new FileNotFoundException("Private key file not found.", publicKeyPath);
+            }
+            //return sw.ToString();
+        }
         public string GetPrivateKey(string name)
         {
             string privateKeyName = name.Replace("_public", "_private");
@@ -60,28 +71,32 @@ namespace SecurityProject.RSA
             }
         }
 
+
+
         public string Encrypt(string plainText, string publicKey)
         {
             try
             {
-                rsa.ImportParameters(_pubKey);
+                rsa.FromXmlString(publicKey);
                 var data = Encoding.Default.GetBytes(plainText);
                 var cypher = rsa.Encrypt(data, false);
                 return Convert.ToBase64String(cypher);
             }
-            catch (Exception ex)
+            catch (CryptographicException ex)
             {
                 MessageBox.Show("Encryption failed: " + ex.Message);
                 return null;
-            }           
+            }
         }
+
+
 
         public string Decrypt(string cypherText, string privateKey)
         {
             try
             {
                 var dataBytes = Convert.FromBase64String(cypherText);
-                rsa.ImportParameters(_privKey);
+                rsa.FromXmlString(privateKey);
                 var plainText = rsa.Decrypt(dataBytes, false);
                 return Encoding.Default.GetString(plainText);
             }

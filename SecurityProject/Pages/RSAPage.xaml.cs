@@ -21,10 +21,10 @@ using System.Security.Cryptography;
 
 namespace SecurityProject.Pages
 {
-    /// <summary>
-    /// Interaction logic for RSAPage.xaml
-    /// </summary>
-    public partial class RSAPage : Page
+    /// <summary>
+    /// Interaction logic for RSAPage.xaml
+    /// </summary>
+    public partial class RSAPage : Page
     {
         public string EncryptedText { get; set; }
         public string DecryptedText { get; set; }
@@ -35,6 +35,17 @@ namespace SecurityProject.Pages
             InitializeComponent();
             LoadRSAKeys();
             LoadAESKeys();
+            LoadEncryptedKeys();
+        }
+
+        private void LoadEncryptedKeys()
+        {
+            string[] keyFiles = Directory.GetFiles(StaticData.DefaultFileAESEncrypted, "encrypted_*.xml");
+            foreach (string keyFile in keyFiles)
+            {
+                string keyFileName = Path.GetFileNameWithoutExtension(keyFile);
+                LoadEncryptedFilesComboBox.Items.Add(keyFileName);
+            }
         }
 
         private void Encrypt_Click(object sender, RoutedEventArgs e)
@@ -45,18 +56,20 @@ namespace SecurityProject.Pages
             }
             else
             {
-                string publicKey = _rsa.GetPublicKey();
+                string publicKey = _rsa.GetPublicKey(KeyComboBoxRSA.SelectedItem.ToString());
                 string encryptedData = _rsa.Encrypt(_plainText, publicKey);
                 EncryptedText = encryptedData;
                 txtEncrypted.Text = EncryptedText;
             }
         }
 
+
+
         private void Decrypt_Click(object sender, RoutedEventArgs e)
         {
-            if (KeyComboBox.SelectedItem == null || KeyComboBoxRSA.SelectedItem == null)
+            if (KeyComboBoxRSA.SelectedItem == null && EncryptedText != null)
             {
-                MessageBox.Show("Selecteer de juiste sleutels in de dropdowns");
+                MessageBox.Show("Selecteer de juiste sleutels in de RSA dropdowns of kies een geencrepteerde");
             }
             else if (EncryptedText != null)
             {
@@ -67,9 +80,11 @@ namespace SecurityProject.Pages
             }
         }
 
+
+
         private void LoadRSAKeys()
         {
-            string[] keyFiles = Directory.GetFiles(StaticData.DefaultRSAKeys, "*.xml");
+            string[] keyFiles = Directory.GetFiles(StaticData.DefaultRSAKeys, "*_public.xml");
             foreach (string keyFile in keyFiles)
             {
                 string keyFileName = Path.GetFileNameWithoutExtension(keyFile);
@@ -77,10 +92,14 @@ namespace SecurityProject.Pages
             }
         }
 
+
+
         private void LoadAESKeys()
         {
-            // Get the RSA key files from the default folder
-            string[] keyFiles = Directory.GetFiles(StaticData.DefaultAESKeys, "*.xml");
+            // Get the RSA key files from the default folder
+            string[] keyFiles = Directory.GetFiles(StaticData.DefaultAESKeys, "*_aes.xml");
+
+
 
             // Add the file names to the ComboBox
             foreach (string keyFile in keyFiles)
@@ -88,6 +107,8 @@ namespace SecurityProject.Pages
                 KeyComboBox.Items.Add(System.IO.Path.GetFileName(keyFile));
             }
         }
+
+
 
         private void KeyComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -100,34 +121,58 @@ namespace SecurityProject.Pages
             }
         }
 
+
+
         private void KeyComboBoxRSA_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {          
+        {
             if (KeyComboBoxRSA.SelectedItem != null)
             {
                 string selectedKeyFileName = (string)KeyComboBoxRSA.SelectedItem;
                 string selectedKeyFilePath = Path.Combine(StaticData.DefaultRSAKeys, selectedKeyFileName);
                 StaticData.SelectedRSAKey = selectedKeyFilePath;
-            }            
+            }
         }
+
+
 
         private void SaveAES_Click(object sender, RoutedEventArgs e)
         {
             if (txtEncrypted.Text != "")
             {
-                SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+                System.Windows.Forms.SaveFileDialog saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+                saveFileDialog1.InitialDirectory = StaticData.DefaultFileRSAEncrypted;
                 saveFileDialog1.Filter = "XML|*.xml";
                 saveFileDialog1.Title = "Save your encrypted AES key";
-                saveFileDialog1.ShowDialog();
-
-                if (saveFileDialog1.FileName != "")
+                if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    System.IO.FileStream fs =
-                        (System.IO.FileStream)saveFileDialog1.OpenFile();
-
-                    fs.Close();
-
+                    var name = Path.GetFileName(saveFileDialog1.FileName);
+                    var encrypterName = $"encrypted_{name}";
+                    if (saveFileDialog1.FileName != "")
+                    {
+                        string directoryPath = Path.GetDirectoryName(saveFileDialog1.FileName);
+                        File.WriteAllText(Path.Combine(directoryPath, encrypterName), EncryptedText);
+                    }
                 }
             }
+        }
+
+        private void LoadEncryptedFilesComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            string selectedKeyFileName = (string)LoadEncryptedFilesComboBox.SelectedItem;
+            string selectedKeyFilePath = Path.Combine(StaticData.DefaultFileAESEncrypted, $"{selectedKeyFileName}.xml");
+                string encryptedBytes = EncryptedText;
+            try
+            {
+                EncryptedText = File.ReadAllText(selectedKeyFilePath);
+                txtEncrypted.Text = EncryptedText;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                
+            }
+                
         }
     }
 }

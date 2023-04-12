@@ -5,32 +5,34 @@
 
 
     <Style TargetType="{x:Type local:NavButton}">
-        <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:NavButton}">
-                    <Border Name="back"
-                            Background="gray"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="3"
-                            Padding="{TemplateBinding Padding}">
-                        <TextBlock Text="{TemplateBinding Navtext}" 
-                               Foreground="DarkGray"
-                               FontSize="15"
-                               TextAlignment="Center"
-                               FontFamily="Montserrat"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               Margin="30,0,30,0"/>
+                    <Border
+                        Name="back"
+                        Padding="{TemplateBinding Padding}"
+                        Background="gray"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="3">
+                        <TextBlock
+                            Margin="30,0,30,0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontFamily="Montserrat"
+                            FontSize="15"
+                            Foreground="DarkGray"
+                            Text="{TemplateBinding Navtext}"
+                            TextAlignment="Center" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="back" Value="#1985a1"/>
+                            <Setter TargetName="back" Property="Background" Value="#1985a1" />
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Background" TargetName="back" Value="#1985a1"/>
+                            <Setter TargetName="back" Property="Background" Value="#1985a1" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

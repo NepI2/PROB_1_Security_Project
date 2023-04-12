@@ -1,8 +1,11 @@
-﻿using SecurityProject.Pages;
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using SecurityProject.Pages;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,7 +16,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SecurityProject
 {
@@ -67,17 +69,42 @@ namespace SecurityProject
             if (!string.IsNullOrEmpty(defaultRSAKeys))
                 StaticData.DefaultRSAKeys = defaultRSAKeys;
 
-            string selectedAESKey = ConfigurationManager.AppSettings["SelectedAESKey"];
-            if (!string.IsNullOrEmpty(selectedAESKey))
-                StaticData.SelectedAESKey = selectedAESKey;
+            //string selectedAESKey = ConfigurationManager.AppSettings["SelectedAESKey"];
+            //if (!string.IsNullOrEmpty(selectedAESKey))
+            //    StaticData.SelectedAESKey = selectedAESKey;
 
-            string selectedRSAKey = ConfigurationManager.AppSettings["SelectedRSAKey"];
-            if (!string.IsNullOrEmpty(selectedRSAKey))
-                StaticData.SelectedRSAKey = selectedRSAKey;
+            //string selectedRSAKey = ConfigurationManager.AppSettings["SelectedRSAKey"];
+            //if (!string.IsNullOrEmpty(selectedRSAKey))
+            //    StaticData.SelectedRSAKey = selectedRSAKey;
 
-            string selectedAESFile = ConfigurationManager.AppSettings["SelectedAESFile"];
-            if (!string.IsNullOrEmpty(selectedAESFile))
-                StaticData.SelectedAESFile = selectedAESFile;
+            //string selectedAESFile = ConfigurationManager.AppSettings["SelectedAESFile"];
+            //if (!string.IsNullOrEmpty(selectedAESFile))
+            //    StaticData.SelectedAESFile = selectedAESFile;
+
+            else
+            {
+                StaticData.DefaultFileAESEncrypted = FolderManager.SetFolderPathOrCreate("DefaultFileAESEncrypted");
+                config.AppSettings.Settings["DefaultFileAESEncrypted"].Value = StaticData.DefaultFileAESEncrypted;
+                StaticData.DefaultFileAESDecrypted = FolderManager.SetFolderPathOrCreate("DefaultFileAESDecrypted");
+                //ConfigurationManager.AppSettings["DefaultFileAESDecrypted"] = StaticData.DefaultFileAESDecrypted;
+
+                StaticData.DefaultFileRSAEncrypted = FolderManager.SetFolderPathOrCreate("DefaultFileRSAEncrypted");
+                config.AppSettings.Settings["DefaultFileRSAEncrypted"].Value = StaticData.DefaultFileAESEncrypted;
+                StaticData.DefaultFileRSADecrypted = FolderManager.SetFolderPathOrCreate("DefaultFileRSADecrypted");
+                config.AppSettings.Settings["DefaultFileRSADecrypted"].Value = StaticData.DefaultFileAESEncrypted;
+
+
+                StaticData.DefaultFileToOpen = FolderManager.SetFolderPathOrCreate("DefaultFileToOpen");
+                config.AppSettings.Settings["DefaultFileToOpen"].Value = StaticData.DefaultFileAESEncrypted;
+
+                StaticData.DefaultAESKeys = FolderManager.SetFolderPathOrCreate("DefaultAESKeys");
+                config.AppSettings.Settings["DefaultAESKeys"].Value = StaticData.DefaultFileAESEncrypted;
+                StaticData.DefaultRSAKeys = FolderManager.SetFolderPathOrCreate("DefaultRSAKeys");
+                config.AppSettings.Settings["DefaultRSAKeys"].Value = StaticData.DefaultFileAESEncrypted;
+
+                config.AppSettings.Settings["DefaultFoldersSet"].Value = "true";
+                    StaticData.DefaultFoldersSet = true;
+            }
         }
 
 
@@ -110,6 +137,26 @@ namespace SecurityProject
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+
+        public static class FolderManager
+        {
+            public static string FolderPath { get; private set; }
+
+            public static string SetFolderPathOrCreate(string folderName)
+            {
+                string fullPath = Path.Combine("Default Folders", folderName);
+
+                if (!Directory.Exists(fullPath))
+                {
+                    Directory.CreateDirectory(fullPath);
+                }
+
+                FolderPath = Path.GetRelativePath(Directory.GetCurrentDirectory(), fullPath);
+
+                return FolderPath;
+            }
         }
     }
 }
