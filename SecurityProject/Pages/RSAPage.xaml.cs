@@ -45,7 +45,7 @@ namespace SecurityProject.Pages
             }
             else
             {
-                string publicKey = _rsa.GetPublicKey();
+                string publicKey = _rsa.GetPublicKey(KeyComboBoxRSA.SelectedItem.ToString());
                 string encryptedData = _rsa.Encrypt(_plainText, publicKey);
                 EncryptedText = encryptedData;
                 txtEncrypted.Text = EncryptedText;

@@ -39,12 +39,21 @@ namespace SecurityProject.RSA
             File.WriteAllText(publicKeyPath, publicKey);
             File.WriteAllText(privateKeyPath, privateKey);
         }
-        public string GetPublicKey()
+        public string GetPublicKey(string name)
         {
-            var sw = new StringWriter();
-            var xs = new XmlSerializer(typeof(RSAParameters));
-            xs.Serialize(sw, _pubKey);
-            return sw.ToString();
+            //var sw = new StringWriter();
+            //var xs = new XmlSerializer(typeof(RSAParameters));
+            //xs.Serialize(sw, _pubKey);
+            string publicKeyPath = Path.Combine(StaticData.DefaultRSAKeys, $"{name}.xml");
+            if (File.Exists(publicKeyPath))
+            {
+                return File.ReadAllText(publicKeyPath);
+            }
+            else
+            {
+                throw new FileNotFoundException("Private key file not found.", publicKeyPath);
+            }
+            //return sw.ToString();
         }
         public string GetPrivateKey(string name)
         {
@@ -64,12 +73,12 @@ namespace SecurityProject.RSA
         {
             try
             {
-                rsa.ImportParameters(_pubKey);
+                rsa.FromXmlString(publicKey);
                 var data = Encoding.Default.GetBytes(plainText);
                 var cypher = rsa.Encrypt(data, false);
                 return Convert.ToBase64String(cypher);
             }
-            catch (Exception ex)
+            catch (CryptographicException ex)
             {
                 MessageBox.Show("Encryption failed: " + ex.Message);
                 return null;
@@ -81,7 +90,7 @@ namespace SecurityProject.RSA
             try
             {
                 var dataBytes = Convert.FromBase64String(cypherText);
-                rsa.ImportParameters(_privKey);
+                rsa.FromXmlString(privateKey);
                 var plainText = rsa.Decrypt(dataBytes, false);
                 return Encoding.Default.GetString(plainText);
             }
