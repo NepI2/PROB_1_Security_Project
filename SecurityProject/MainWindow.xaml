@@ -14,7 +14,7 @@
         AllowsTransparency="True">
     <Border CornerRadius="19">
         <Border.Background>
-            <ImageBrush ImageSource="/Data/BinaryRed.png" />
+            <ImageBrush ImageSource="/Data/BinaryBlue.png" />
         </Border.Background>
         <Border CornerRadius="17"
                 BorderThickness="5"

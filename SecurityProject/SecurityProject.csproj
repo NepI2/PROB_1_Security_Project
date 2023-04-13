@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Data\BinaryBlue.png" />
     <None Remove="Data\BinaryRed.png" />
   </ItemGroup>
 
@@ -19,6 +20,7 @@
 
   <ItemGroup>
     <Resource Include="Data\binary.jpg" />
+    <Resource Include="Data\BinaryBlue.png" />
     <Resource Include="Data\BinaryRed.png" />
   </ItemGroup>
 
