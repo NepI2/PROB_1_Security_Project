@@ -23,7 +23,7 @@
                             VerticalAlignment="Center"
                             FontFamily="Montserrat"
                             FontSize="15"
-                            Foreground="DarkGray"
+                            Foreground="#FFF4F4F4"
                             Text="{TemplateBinding Navtext}"
                             TextAlignment="Center" />
                     </Border>

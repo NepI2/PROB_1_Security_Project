@@ -1,10 +1,8 @@
 ﻿using AES;
-using Layout;
 using Layout.HelpersClasses;
 using System;
 using System.IO;
 using System.Security.Cryptography;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -69,7 +67,9 @@ namespace SecurityProject.Pages
                 imgResult.BeginAnimation(Image.OpacityProperty, animation);
                 try
                 {
-                    aesEncrypt.EncryptStringToBytes_Aes();
+                    string name = Microsoft.VisualBasic.Interaction.InputBox("Enter file name for cipher file", "Cipher file", "");
+                    aesEncrypt.EncryptStringToBytes_Aes(name);
+                    LoadAESKeys();
                 }
                 catch (CryptographicException ex)
                 {
@@ -84,7 +84,7 @@ namespace SecurityProject.Pages
         private void Decrypt_Click(object sender, RoutedEventArgs e)
         {
 
-            if (StaticData.SelectedAESFile != null && StaticData.SelectedAESKey != null)
+            if (StaticData.SelectedAESFile != null && StaticData.SelectedAESKey != null && StaticData.SelectedAESCipher != null)
             {
                 // Fade out the image
                 DoubleAnimation animation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(1));
@@ -137,6 +137,7 @@ namespace SecurityProject.Pages
             foreach (string keyFile in keyFiles)
             {
                 KeyComboBox.Items.Add(System.IO.Path.GetFileName(keyFile));
+                CipherComboBox.Items.Add(System.IO.Path.GetFileName(keyFile));
             }
         }
 
@@ -148,6 +149,16 @@ namespace SecurityProject.Pages
                 string selectedKeyFileName = (string)KeyComboBox.SelectedItem;
                 string selectedKeyFilePath = Path.Combine(StaticData.DefaultAESKeys, selectedKeyFileName);
                 StaticData.SelectedAESKey = selectedKeyFilePath;
+            }
+        }
+
+        private void CipherComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (CipherComboBox.SelectedItem != null)
+            {
+                string selectedKeyFileName = (string)CipherComboBox.SelectedItem;
+                string selectedKeyFilePath = Path.Combine(StaticData.DefaultAESKeys, selectedKeyFileName);
+                StaticData.SelectedAESCipher = selectedKeyFilePath;
             }
         }
     }
