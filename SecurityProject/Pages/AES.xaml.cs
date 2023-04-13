@@ -38,7 +38,7 @@ namespace SecurityProject.Pages
             //    // Save or load keys from the selected path
             //}
 
-            var result = Helpers.SelectingFolder(StaticData.DefaultAESKeys, "Folders|*.none");
+            var result = Helpers.SelectingFolder(Path.GetFullPath(StaticData.DefaultAESKeys), "Folders|*.none");
             if (result != null)
             {
                 StaticData.DefaultAESKeys = result;
@@ -53,7 +53,7 @@ namespace SecurityProject.Pages
 
             //openPNG.InitialDirectory = StaticData.DefaultFileToOpen;
 
-            openPNG.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.CommonPictures);
+            openPNG.InitialDirectory = Path.GetFullPath(StaticData.DefaultFileToOpen);
             openPNG.Filter = "png files (*.png)|*.png";
             openPNG.FilterIndex = 2;
             openPNG.RestoreDirectory = true;
