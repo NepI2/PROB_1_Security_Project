@@ -140,7 +140,7 @@ namespace SecurityProject.Pages
             if (txtEncrypted.Text != "")
             {
                 System.Windows.Forms.SaveFileDialog saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-                saveFileDialog1.InitialDirectory = StaticData.DefaultFileRSAEncrypted;
+                saveFileDialog1.InitialDirectory = Path.GetFullPath(StaticData.DefaultFileAESEncrypted);
                 saveFileDialog1.Filter = "XML|*.xml";
                 saveFileDialog1.Title = "Save your encrypted AES key";
                 if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)

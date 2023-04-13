@@ -85,25 +85,29 @@ namespace SecurityProject
             {
                 StaticData.DefaultFileAESEncrypted = FolderManager.SetFolderPathOrCreate("DefaultFileAESEncrypted");
                 config.AppSettings.Settings["DefaultFileAESEncrypted"].Value = StaticData.DefaultFileAESEncrypted;
+
                 StaticData.DefaultFileAESDecrypted = FolderManager.SetFolderPathOrCreate("DefaultFileAESDecrypted");
-                //ConfigurationManager.AppSettings["DefaultFileAESDecrypted"] = StaticData.DefaultFileAESDecrypted;
+                config.AppSettings.Settings["DefaultFileAESDecrypted"].Value = StaticData.DefaultFileAESDecrypted;
 
                 StaticData.DefaultFileRSAEncrypted = FolderManager.SetFolderPathOrCreate("DefaultFileRSAEncrypted");
                 config.AppSettings.Settings["DefaultFileRSAEncrypted"].Value = StaticData.DefaultFileAESEncrypted;
+
                 StaticData.DefaultFileRSADecrypted = FolderManager.SetFolderPathOrCreate("DefaultFileRSADecrypted");
                 config.AppSettings.Settings["DefaultFileRSADecrypted"].Value = StaticData.DefaultFileAESEncrypted;
-
 
                 StaticData.DefaultFileToOpen = FolderManager.SetFolderPathOrCreate("DefaultFileToOpen");
                 config.AppSettings.Settings["DefaultFileToOpen"].Value = StaticData.DefaultFileAESEncrypted;
 
                 StaticData.DefaultAESKeys = FolderManager.SetFolderPathOrCreate("DefaultAESKeys");
                 config.AppSettings.Settings["DefaultAESKeys"].Value = StaticData.DefaultFileAESEncrypted;
+
                 StaticData.DefaultRSAKeys = FolderManager.SetFolderPathOrCreate("DefaultRSAKeys");
                 config.AppSettings.Settings["DefaultRSAKeys"].Value = StaticData.DefaultFileAESEncrypted;
 
                 config.AppSettings.Settings["DefaultFoldersSet"].Value = "true";
                     StaticData.DefaultFoldersSet = true;
+
+                config.Save();
             }
         }
 
