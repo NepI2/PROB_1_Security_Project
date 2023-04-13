@@ -26,7 +26,7 @@ namespace AES
             // Save XML document to file
             doc.Save($"{StaticData.DefaultAESKeys}/{name}_aes.xml");
         }
-        public byte[] EncryptStringToBytes_Aes()
+        public byte[] EncryptStringToBytes_Aes(string name)
         {
             byte[] Key;
             byte[] IV;
@@ -49,6 +49,11 @@ namespace AES
             // get key and iv from xml file
             Key = Convert.FromBase64String(doc.Root.Attribute("Key").Value);
             IV = Convert.FromBase64String(doc.Root.Attribute("IV").Value);
+
+            //create new xml
+            XDocument doc2 = new XDocument();
+            XElement root = new XElement("AesData");
+            doc2.Add(root);
 
             // Create an Aes object
             // with the specified key and IV.
@@ -77,8 +82,8 @@ namespace AES
                             csEncrypt.FlushFinalBlock();
                             base64Key = System.Convert.ToBase64String(msEncrypt.ToArray());
                             //open XMLFile and add the encrypted key to it
-                            doc.Root.SetAttributeValue("CipherText", base64Key);
-                            doc.Save(StaticData.SelectedAESKey);
+                            doc2.Root.SetAttributeValue("CipherText", base64Key);
+                            doc2.Save($"{StaticData.DefaultAESKeys}/{name}_ciphertext_aes.xml");
                             return msEncrypt.ToArray();
                         }
                     }

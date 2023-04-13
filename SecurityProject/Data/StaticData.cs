@@ -4,15 +4,16 @@ namespace SecurityProject
 {
     public static class StaticData
     {
-        public static string? DefaultFileAESEncrypted { get; set; } 
+        public static string? DefaultFileAESEncrypted { get; set; }
         public static string? DefaultFileAESDecrypted { get; set; }
-        public static string? DefaultFileRSAEncrypted { get; set; } 
+        public static string? DefaultFileRSAEncrypted { get; set; }
         public static string? DefaultFileRSADecrypted { get; set; }
         public static string? DefaultFileToOpen { get; set; }
         public static string? DefaultAESKeys { get; set; }
         public static string? DefaultRSAKeys { get; set; }
         public static string? SelectedRSAKey { get; set; }
         public static string? SelectedAESKey { get; set; }
+        public static string? SelectedAESCipher { get; set; }
         public static string? SelectedAESFile { get; set; }
 
         public static bool DefaultFoldersSet { get; set; } = false;

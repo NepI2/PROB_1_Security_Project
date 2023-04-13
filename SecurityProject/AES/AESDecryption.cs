@@ -16,11 +16,12 @@ namespace AES
 
             // load the XML file
             XDocument doc = XDocument.Load(StaticData.SelectedAESKey);
+            XDocument doc2 = XDocument.Load(StaticData.SelectedAESCipher);
 
             // get key, IV, and cipherText from xml file
             Key = Convert.FromBase64String(doc.Root.Attribute("Key").Value);
             IV = Convert.FromBase64String(doc.Root.Attribute("IV").Value);
-            cipherText = Convert.FromBase64String(doc.Root.Attribute("CipherText").Value);
+            cipherText = Convert.FromBase64String(doc2.Root.Attribute("CipherText").Value);
 
             // Create an Aes object with the specified key and IV
             using (Aes aesAlg = Aes.Create())
