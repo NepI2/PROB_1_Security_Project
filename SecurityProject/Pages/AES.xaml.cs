@@ -3,6 +3,8 @@ using Layout;
 using Layout.HelpersClasses;
 using System;
 using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -81,8 +83,14 @@ namespace SecurityProject.Pages
                 // Fade out the image
                 DoubleAnimation animation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(1));
                 imgResult.BeginAnimation(Image.OpacityProperty, animation);
-
-                aesEncrypt.EncryptStringToBytes_Aes();
+                try
+                {
+                    aesEncrypt.EncryptStringToBytes_Aes();
+                }
+                catch (CryptographicException ex)
+                {
+                    System.Windows.Forms.MessageBox.Show("Decryption failed: " + ex.Message);
+                }
                 // Fade in the image
                 animation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(1));
                 imgResult.BeginAnimation(Image.OpacityProperty, animation);
@@ -98,16 +106,24 @@ namespace SecurityProject.Pages
                 DoubleAnimation animation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(1));
                 imgResult.BeginAnimation(Image.OpacityProperty, animation);
 
-                byte[] decrypted = aesDecrypt.DecryptBytesFromBytes_Aes();
-                using (MemoryStream ms = new MemoryStream(decrypted))
+                try
                 {
-                    using (System.Drawing.Image image = System.Drawing.Image.FromStream(ms))
+                    byte[] decrypted = aesDecrypt.DecryptBytesFromBytes_Aes();
+                    using (MemoryStream ms = new MemoryStream(decrypted))
                     {
-                        string temp = Microsoft.VisualBasic.Interaction.InputBox("Enter file name", "Decryption ready!", "");
-                        image.Save($"{StaticData.DefaultFileAESDecrypted}/{Path.GetFileNameWithoutExtension(temp)}.png", System.Drawing.Imaging.ImageFormat.Png);
-                        imgResult.Source = new BitmapImage(new Uri($"{StaticData.DefaultFileAESDecrypted}/{Path.GetFileNameWithoutExtension(temp)}.png"));
+                        using (System.Drawing.Image image = System.Drawing.Image.FromStream(ms))
+                        {
+                            string temp = Microsoft.VisualBasic.Interaction.InputBox("Enter file name", "Decryption ready!", "");
+                            image.Save($"{StaticData.DefaultFileAESDecrypted}/{Path.GetFileNameWithoutExtension(temp)}.png", System.Drawing.Imaging.ImageFormat.Png);
+                            imgResult.Source = new BitmapImage(new Uri($"{StaticData.DefaultFileAESDecrypted}/{Path.GetFileNameWithoutExtension(temp)}.png"));
+                        }
                     }
                 }
+                catch (CryptographicException ex)
+                {
+                    System.Windows.Forms.MessageBox.Show("Decryption failed: " + ex.Message);
+                }
+                
                 // Fade in the image
                 animation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(1));
                 imgResult.BeginAnimation(Image.OpacityProperty, animation);
