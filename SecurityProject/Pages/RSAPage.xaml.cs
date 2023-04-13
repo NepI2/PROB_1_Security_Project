@@ -183,5 +183,26 @@ namespace SecurityProject.Pages
             }
                 
         }
+
+        private void SaveDecryptedAES_Click(object sender, RoutedEventArgs e)
+        {
+            if (txtEncrypted.Text != "")
+            {
+                System.Windows.Forms.SaveFileDialog saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+                saveFileDialog1.InitialDirectory = Path.GetFullPath(StaticData.DefaultFileAESDecrypted);
+                saveFileDialog1.Filter = "XML|*.xml";
+                saveFileDialog1.Title = "Save your encrypted AES key";
+                if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    var name = Path.GetFileName(saveFileDialog1.FileName);
+                    var encrypterName = $"decrypted_{name}";
+                    if (saveFileDialog1.FileName != "")
+                    {
+                        string directoryPath = Path.GetDirectoryName(saveFileDialog1.FileName);
+                        File.WriteAllText(Path.Combine(directoryPath, encrypterName), EncryptedText);
+                    }
+                }
+            }
+        }
     }
 }

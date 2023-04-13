@@ -34,32 +34,32 @@ namespace SecurityProject.Pages
         private void generateAES_Click(object sender, RoutedEventArgs e)
         {
             AESEncryption aeskey = new AESEncryption();
-            if (txtGenKey.Text == "")
+            if (txtGenKey.Text != "")
             {
-                MessageBox.Show("Please enter a name for the key");
+                aeskey.GenerateKeys(txtGenKey.Text);
+                MessageBox.Show($"Key {txtGenKey.Text} is generated");
             }
             else
             {
-                aeskey.GenerateKeys(txtGenKey.Text);
-            }
-            MessageBox.Show($"Key {txtGenKey.Text} is generated");
+                MessageBox.Show("Please enter a name for the key");
+            }         
             txtGenKey.Text = string.Empty;
         }
 
         private void generateRSA_Click(object sender, RoutedEventArgs e)
         {
             RSAEncryption rsaKey = new RSAEncryption();
-            if (txtGenKey.Text == "")
+            if (txtGenKey.Text != "")
             {
                 MessageBox.Show("Please enter a name for the key");
+                rsaKey.GenerateKeys(txtGenKey.Text);
+                MessageBox.Show($"Key {txtGenKey.Text} is generated");
             }
             else
             {
-                rsaKey.GenerateKeys(txtGenKey.Text);
-            }
-            MessageBox.Show($"Key {txtGenKey.Text} is generated");
+                MessageBox.Show("Please enter a name for the key");
+            }           
             txtGenKey.Text = string.Empty;
-
         }
     }
 }

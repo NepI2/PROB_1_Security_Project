@@ -11,7 +11,6 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
 
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -74,7 +73,7 @@
             Margin="10"
             Click="Encrypt_Click"
             Style="{DynamicResource RoundedButton}">
-            Encrypt AES Keys
+            Encrypt AES Key
         </Button>
         <Button
             Name="SaveAES"
@@ -83,7 +82,7 @@
             Margin="10"
             Click="SaveAES_Click"
             Style="{DynamicResource RoundedButton}">
-            Save AES encryption
+            Save Encrypted AES key
         </Button>
         <TextBox
             x:Name="txtEncrypted"
@@ -99,12 +98,21 @@
             Style="{DynamicResource TextBoxStyleRounded}"
             TextWrapping="Wrap" />
         <Button
-            Grid.Row="7"
+            Grid.Row="6"
             Grid.Column="2"
             Margin="10"
             Click="Decrypt_Click"
             Style="{DynamicResource RoundedButton}">
-            Decrypt AES Keys
+            Decrypt AES Key
+        </Button>
+        <Button
+            Name="SaveDecryptedAES"
+            Grid.Row="7"
+            Grid.Column="2"
+            Margin="10"
+            
+            Style="{DynamicResource RoundedButton}" Click="SaveDecryptedAES_Click">
+            Save Decrypted AES Key
         </Button>
         <TextBox
             x:Name="txtDecrypted"
