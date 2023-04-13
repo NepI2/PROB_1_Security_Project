@@ -69,17 +69,6 @@ namespace SecurityProject
             if (!string.IsNullOrEmpty(defaultRSAKeys))
                 StaticData.DefaultRSAKeys = defaultRSAKeys;
 
-            //string selectedAESKey = ConfigurationManager.AppSettings["SelectedAESKey"];
-            //if (!string.IsNullOrEmpty(selectedAESKey))
-            //    StaticData.SelectedAESKey = selectedAESKey;
-
-            //string selectedRSAKey = ConfigurationManager.AppSettings["SelectedRSAKey"];
-            //if (!string.IsNullOrEmpty(selectedRSAKey))
-            //    StaticData.SelectedRSAKey = selectedRSAKey;
-
-            //string selectedAESFile = ConfigurationManager.AppSettings["SelectedAESFile"];
-            //if (!string.IsNullOrEmpty(selectedAESFile))
-            //    StaticData.SelectedAESFile = selectedAESFile;
 
             else
             {

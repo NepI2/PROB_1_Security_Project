@@ -60,6 +60,9 @@ namespace SecurityProject.Pages
                 string encryptedData = _rsa.Encrypt(_plainText, publicKey);
                 EncryptedText = encryptedData;
                 txtEncrypted.Text = EncryptedText;
+                LoadRSAKeys();
+                LoadAESKeys();
+                LoadEncryptedKeys();
             }
         }
 
@@ -77,6 +80,9 @@ namespace SecurityProject.Pages
                 string encryptedBytes = EncryptedText;
                 DecryptedText = _rsa.Decrypt(encryptedBytes, privatekey);
                 txtDecrypted.Text = DecryptedText;
+                LoadRSAKeys();
+                LoadAESKeys();
+                LoadEncryptedKeys();
             }
         }
 
@@ -151,6 +157,9 @@ namespace SecurityProject.Pages
                     {
                         string directoryPath = Path.GetDirectoryName(saveFileDialog1.FileName);
                         File.WriteAllText(Path.Combine(directoryPath, encrypterName), EncryptedText);
+                        LoadRSAKeys();
+                        LoadAESKeys();
+                        LoadEncryptedKeys();
                     }
                 }
             }
