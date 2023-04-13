@@ -22,7 +22,7 @@ namespace SecurityProject
             DefaultStyleKeyProperty.OverrideMetadata(typeof(NavButton), new FrameworkPropertyMetadata(typeof(NavButton)));
         }
 
-        public bool RequiresDefaultFolders { get; set; }
+        //public bool RequiresDefaultFolders { get; set; }
 
         public Uri Navlink
         {

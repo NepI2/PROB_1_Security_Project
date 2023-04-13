@@ -9,6 +9,26 @@ namespace Layout.HelpersClasses
 {
     public static class Helpers
     {
+
+        public static class FolderManager
+        {
+            public static string FolderPath { get; private set; }
+
+            public static string SetFolderPathOrCreate(string folderName)
+            {
+                string fullPath = Path.Combine("Default Folders", folderName);
+
+                if (!Directory.Exists(fullPath))
+                {
+                    Directory.CreateDirectory(fullPath);
+                }
+
+                FolderPath = Path.GetRelativePath(Directory.GetCurrentDirectory(), fullPath);
+
+                return FolderPath;
+            }
+        }
+
         public static bool CheckingKeyName(string name)
         {
             if (name == null || string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name))
@@ -18,19 +38,6 @@ namespace Layout.HelpersClasses
         }
         public static string SelectingFolder(string defaultPath, string type)
         {
-            //var dialog = new System.Windows.Forms.FolderBrowserDialog();
-            //dialog.SelectedPath = defaultPath;
-            //dialog.Description = type;
-            //System.Windows.Forms.DialogResult result = dialog.ShowDialog();
-            //if (result == System.Windows.Forms.DialogResult.OK)
-            //{
-            //    return dialog.SelectedPath;
-            //}
-            //else
-            //{
-            //    return null;
-            //}
-
             using (var fbd = new System.Windows.Forms.FolderBrowserDialog())
             {
 
@@ -42,21 +49,11 @@ namespace Layout.HelpersClasses
                     {
                         return fbd.SelectedPath;
                     }
+
                 else
                     {
-                        return null;
+                        return defaultPath;
                     }
-                //fbd.Description = "Select the folder where you want to save the cyphertext";
-                //System.Windows.Forms.DialogResult result = fbd.ShowDialog();
-
-                //if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
-                //{
-                //    return fbd.SelectedPath;
-                //}
-                //else
-                //{
-                //    return null;
-                //}
             }
         }
         public static string SelectFile(string defaultPath, string type)

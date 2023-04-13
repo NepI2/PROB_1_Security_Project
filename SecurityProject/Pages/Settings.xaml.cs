@@ -27,95 +27,56 @@ namespace SecurityProject.Pages
         public Settings()
         {
             InitializeComponent();
-            RSAKeyPlaceholder.Text = StaticData.DefaultRSAKeys;
-            AESKeyPlaceholder.Text = StaticData.DefaultAESKeys;
-            EncryptedFilesPlaceholder.Text = StaticData.DefaultFileAESEncrypted;
-            DecryptedFilesPlaceholder.Text = StaticData.DefaultFileAESDecrypted;
-            ChoosingFilesPlaceholder.Text = StaticData.DefaultFileToOpen;
+            SettingPahtLables();
         }
 
+        void SettingPahtLables()
+        {
+            RSAKeyPlaceholder.Text = StaticData.DefaultRSAKeys;
+            AESKeyPlaceholder.Text = StaticData.DefaultAESKeys;
+            EncryptedFilesPlaceholder.Text = StaticData.DefaultFileEncrypted;
+            DecryptedFilesPlaceholder.Text = StaticData.DefaultFileDecrypted;
+            ChoosingFilesPlaceholder.Text = StaticData.DefaultFileToOpen;
+        }
         private void RSAKeysFolderBtn_Click(object sender, RoutedEventArgs e)
         {
             var result = Helpers.SelectingFolder(StaticData.DefaultRSAKeys, "Folders|*.none");
-            if (result != null)
-            {
-                MessageBox.Show("Folder picked");
-            }
-            // Set the DefaultAESKeys property to the selected folder path
+            StaticData.UpdateFolderPathSettings("DefaultRSAKeys");
             StaticData.DefaultRSAKeys = result;
             RSAKeyPlaceholder.Text = result;
-            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            config.AppSettings.Settings["DefaultRSAKeys"].Value = StaticData.DefaultRSAKeys;
-            config.Save(ConfigurationSaveMode.Modified);
-            StaticData.UpdateDefaultFoldersSet();
 
         }
 
         private void AESKeysFolderBtn_Click(object sender, RoutedEventArgs e)
         {
             var result = Helpers.SelectingFolder(StaticData.DefaultAESKeys, "Folders|*.none");
-            if (result != null)
-            {
-                MessageBox.Show("Folder picked");
-
-            }
+            StaticData.UpdateFolderPathSettings("DefaultAESKeys");
             StaticData.DefaultAESKeys = result;
             AESKeyPlaceholder.Text = result;
-            // Save the value to the App.config file
-            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            config.AppSettings.Settings["DefaultAESKeys"].Value = StaticData.DefaultAESKeys;
-            config.Save(ConfigurationSaveMode.Modified);
-            StaticData.UpdateDefaultFoldersSet();
         }
 
         private void EncriptedFilesFolderBtn_Click(object sender, RoutedEventArgs e)
         {
-            var result = Helpers.SelectingFolder(StaticData.DefaultFileRSADecrypted, "Folders|*.none");
-            if (result != null)
-            {
-                MessageBox.Show($"Folder picked");
-
-            }
-            StaticData.DefaultFileRSAEncrypted = result;            
-            StaticData.DefaultFileAESEncrypted = result;
+            var result = Helpers.SelectingFolder(StaticData.DefaultFileDecrypted, "Folders|*.none");
+            StaticData.UpdateFolderPathSettings("DefaultFileDecrypted");
+            StaticData.DefaultFileEncrypted = result;            
             EncryptedFilesPlaceholder.Text = result;
-            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            config.AppSettings.Settings["DefaultFileRSAEncrypted"].Value = StaticData.DefaultFileRSAEncrypted;
-            config.AppSettings.Settings["DefaultFileAESEncrypted"].Value = StaticData.DefaultFileAESEncrypted;           
-            config.Save(ConfigurationSaveMode.Modified);
-            StaticData.UpdateDefaultFoldersSet();
         }
 
         private void DecriptedFilesFolderBtn_Click(object sender, RoutedEventArgs e)
         {
-            var result = Helpers.SelectingFolder(StaticData.DefaultFileRSAEncrypted, "Folders|*.none");
-            if (result != null)
-            {
-                MessageBox.Show($"Folder picked");
-            }
-            StaticData.DefaultFileRSADecrypted = result;
-            StaticData.DefaultFileAESDecrypted = result;
+            var result = Helpers.SelectingFolder(StaticData.DefaultFileDecrypted, "Folders|*.none");
+            StaticData.UpdateFolderPathSettings("DefaultFileDecrypted");
+            StaticData.DefaultFileDecrypted = result;
             DecryptedFilesPlaceholder.Text = result;
-            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            config.AppSettings.Settings["DefaultFileRSADecrypted"].Value = StaticData.DefaultFileRSADecrypted;
-            config.AppSettings.Settings["DefaultFileAESDecrypted"].Value = StaticData.DefaultFileAESDecrypted;
-            config.Save(ConfigurationSaveMode.Modified);
-            StaticData.UpdateDefaultFoldersSet();
         }
 
         private void ChoosingFilesFolderBtn_Click(object sender, RoutedEventArgs e)
         {
             var result = Helpers.SelectingFolder(StaticData.DefaultFileToOpen, "Folders|*.none");
-            if (result != null)
-            {
-                MessageBox.Show("Folder picked");
-            }
+            StaticData.UpdateFolderPathSettings("DefaultFileToOpen");
             StaticData.DefaultFileToOpen = result;
             ChoosingFilesPlaceholder.Text = result;
-            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            config.AppSettings.Settings["DefaultFileToOpen"].Value = StaticData.DefaultFileToOpen;
-            config.Save(ConfigurationSaveMode.Modified);
-            StaticData.UpdateDefaultFoldersSet();
         }
     }
 }

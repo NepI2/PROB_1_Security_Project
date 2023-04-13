@@ -4,10 +4,12 @@ namespace SecurityProject
 {
     public static class StaticData
     {
-        public static string? DefaultFileAESEncrypted { get; set; } 
-        public static string? DefaultFileAESDecrypted { get; set; }
-        public static string? DefaultFileRSAEncrypted { get; set; } 
-        public static string? DefaultFileRSADecrypted { get; set; }
+        public static string? DefaultFileEncrypted { get; set; }
+        public static string? DefaultFileDecrypted { get; set; }
+        //public static string? DefaultFileAESEncrypted { get; set; }
+        //public static string? DefaultFileAESDecrypted { get; set; }
+        //public static string? DefaultFileRSAEncrypted { get; set; }
+        //public static string? DefaultFileRSADecrypted { get; set; }
         public static string? DefaultFileToOpen { get; set; }
         public static string? DefaultAESKeys { get; set; }
         public static string? DefaultRSAKeys { get; set; }
@@ -18,29 +20,44 @@ namespace SecurityProject
         public static bool DefaultFoldersSet { get; set; } = false;
 
 
+        public static void UpdateFolderPathSettings(string settingName)
+        {
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+            if (DefaultFileEncrypted != null)
+            {
+                config.AppSettings.Settings[settingName].Value = DefaultFileEncrypted;
+            }
+
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appSettings");
+        }
+
         public static void UpdateDefaultFoldersSet()
         {
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
-            if (DefaultFileAESEncrypted != null)
+            if (DefaultFileEncrypted != null)
             {
-                config.AppSettings.Settings["DefaultFileAESEncrypted"].Value = DefaultFileAESEncrypted;
+                config.AppSettings.Settings["DefaultFileAESEncrypted"].Value = DefaultFileEncrypted;
             }
 
-            if (DefaultFileAESDecrypted != null)
+            if (DefaultFileDecrypted != null)
             {
-                config.AppSettings.Settings["DefaultFileAESDecrypted"].Value = DefaultFileAESDecrypted;
+                config.AppSettings.Settings["DefaultFileAESDecrypted"].Value = DefaultFileDecrypted;
             }
 
-            if (DefaultFileRSAEncrypted != null)
-            {
-                config.AppSettings.Settings["DefaultFileRSAEncrypted"].Value = DefaultFileRSAEncrypted;
-            }
 
-            if (DefaultFileRSADecrypted != null)
-            {
-                config.AppSettings.Settings["DefaultFileRSADecrypted"].Value = DefaultFileRSADecrypted;
-            }
+
+            //if (DefaultFileRSAEncrypted != null)
+            //{
+            //    config.AppSettings.Settings["DefaultFileRSAEncrypted"].Value = DefaultFileRSAEncrypted;
+            //}
+
+            //if (DefaultFileRSADecrypted != null)
+            //{
+            //    config.AppSettings.Settings["DefaultFileRSADecrypted"].Value = DefaultFileRSADecrypted;
+            //}
 
             if (DefaultFileToOpen != null)
             {
@@ -60,17 +77,17 @@ namespace SecurityProject
             config.Save(ConfigurationSaveMode.Modified);
             ConfigurationManager.RefreshSection("appSettings");
 
-            UpdateDefaultFoldersSetStatus();
+            //UpdateDefaultFoldersSetStatus();
         }
 
         private static void UpdateDefaultFoldersSetStatus()
         {
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
-            if (DefaultFileAESEncrypted != null &&
-                DefaultFileAESDecrypted != null &&
-                DefaultFileRSAEncrypted != null &&
-                DefaultFileRSADecrypted != null &&
+            if (DefaultFileEncrypted != null &&
+                DefaultFileDecrypted != null &&
+                //DefaultFileRSAEncrypted != null &&
+                //DefaultFileRSADecrypted != null &&
                 DefaultFileToOpen != null &&
                 DefaultAESKeys != null &&
                 DefaultRSAKeys != null)

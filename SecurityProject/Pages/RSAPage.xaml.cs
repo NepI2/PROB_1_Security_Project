@@ -40,7 +40,7 @@ namespace SecurityProject.Pages
 
         private void LoadEncryptedKeys()
         {
-            string[] keyFiles = Directory.GetFiles(StaticData.DefaultFileAESEncrypted, "encrypted_*.xml");
+            string[] keyFiles = Directory.GetFiles(StaticData.DefaultFileEncrypted, "encrypted_*.xml");
             foreach (string keyFile in keyFiles)
             {
                 string keyFileName = Path.GetFileNameWithoutExtension(keyFile);
@@ -146,7 +146,7 @@ namespace SecurityProject.Pages
             if (txtEncrypted.Text != "")
             {
                 System.Windows.Forms.SaveFileDialog saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-                saveFileDialog1.InitialDirectory = Path.GetFullPath(StaticData.DefaultFileAESEncrypted);
+                saveFileDialog1.InitialDirectory = Path.GetFullPath(StaticData.DefaultFileEncrypted);
                 saveFileDialog1.Filter = "XML|*.xml";
                 saveFileDialog1.Title = "Save your encrypted AES key";
                 if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -169,8 +169,8 @@ namespace SecurityProject.Pages
         {
 
             string selectedKeyFileName = (string)LoadEncryptedFilesComboBox.SelectedItem;
-            string selectedKeyFilePath = Path.Combine(StaticData.DefaultFileAESEncrypted, $"{selectedKeyFileName}.xml");
-                string encryptedBytes = EncryptedText;
+            string selectedKeyFilePath = Path.Combine(StaticData.DefaultFileEncrypted, $"{selectedKeyFileName}.xml");
+            string encryptedBytes = EncryptedText;
             try
             {
                 EncryptedText = File.ReadAllText(selectedKeyFilePath);
@@ -179,9 +179,9 @@ namespace SecurityProject.Pages
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                
+
             }
-                
+
         }
 
         private void SaveDecryptedAES_Click(object sender, RoutedEventArgs e)
@@ -189,7 +189,7 @@ namespace SecurityProject.Pages
             if (txtEncrypted.Text != "")
             {
                 System.Windows.Forms.SaveFileDialog saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-                saveFileDialog1.InitialDirectory = Path.GetFullPath(StaticData.DefaultFileAESDecrypted);
+                saveFileDialog1.InitialDirectory = Path.GetFullPath(StaticData.DefaultFileDecrypted);
                 saveFileDialog1.Filter = "XML|*.xml";
                 saveFileDialog1.Title = "Save your encrypted AES key";
                 if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)

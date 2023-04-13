@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic.ApplicationServices;
+﻿using Layout.HelpersClasses;
+using Microsoft.VisualBasic.ApplicationServices;
 using SecurityProject.Pages;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace SecurityProject
         public MainWindow()
         {
             InitializeComponent();
-            navbar.SelectedIndex= 0;
+            navbar.SelectedIndex = 0;
             navframe.Source = new Uri("Pages/Home.xaml", UriKind.Relative);
             LoadConfig();
         }
@@ -36,68 +37,48 @@ namespace SecurityProject
         {
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
-            // Load the saved value from the App.config file and set the DefaultFoldersSet property
-            string value = config.AppSettings.Settings["DefaultFoldersSet"].Value;
-            if (!string.IsNullOrEmpty(value))
-                StaticData.DefaultFoldersSet = bool.Parse(value);
+            var folderSet = false;
 
-            string defaultFileAESEncrypted = ConfigurationManager.AppSettings["DefaultFileAESEncrypted"];
-            if (!string.IsNullOrEmpty(defaultFileAESEncrypted))
-                StaticData.DefaultFileAESEncrypted = defaultFileAESEncrypted;
-
-            string defaultFileAESDecrypted = ConfigurationManager.AppSettings["DefaultFileAESDecrypted"];
-            if (!string.IsNullOrEmpty(defaultFileAESDecrypted))
-                StaticData.DefaultFileAESDecrypted = defaultFileAESDecrypted;
-
-            string defaultFileRSAEncrypted = ConfigurationManager.AppSettings["DefaultFileRSAEncrypted"];
-            if (!string.IsNullOrEmpty(defaultFileRSAEncrypted))
-                StaticData.DefaultFileRSAEncrypted = defaultFileRSAEncrypted;
-
-            string defaultFileRSADecrypted = ConfigurationManager.AppSettings["DefaultFileRSADecrypted"];
-            if (!string.IsNullOrEmpty(defaultFileRSADecrypted))
-                StaticData.DefaultFileRSADecrypted = defaultFileRSADecrypted;
-
-            string defaultFileToOpen = ConfigurationManager.AppSettings["DefaultFileToOpen"];
-            if (!string.IsNullOrEmpty(defaultFileToOpen))
-                StaticData.DefaultFileToOpen = defaultFileToOpen;
-
-            string defaultAESKeys = ConfigurationManager.AppSettings["DefaultAESKeys"];
-            if (!string.IsNullOrEmpty(defaultAESKeys))
-                StaticData.DefaultAESKeys = defaultAESKeys;
-
-            string defaultRSAKeys = ConfigurationManager.AppSettings["DefaultRSAKeys"];
-            if (!string.IsNullOrEmpty(defaultRSAKeys))
-                StaticData.DefaultRSAKeys = defaultRSAKeys;
-
-
-            else
+            if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["DefaultFileEncrypted"]) ||
+                string.IsNullOrEmpty(ConfigurationManager.AppSettings["DefaultFileDecrypted"]) ||
+                string.IsNullOrEmpty(ConfigurationManager.AppSettings["DefaultFileToOpen"]) ||
+                string.IsNullOrEmpty(ConfigurationManager.AppSettings["DefaultAESKeys"]) ||
+                string.IsNullOrEmpty(ConfigurationManager.AppSettings["DefaultRSAKeys"]))
             {
-                StaticData.DefaultFileAESEncrypted = FolderManager.SetFolderPathOrCreate("DefaultFileAESEncrypted");
-                config.AppSettings.Settings["DefaultFileAESEncrypted"].Value = StaticData.DefaultFileAESEncrypted;
+                StaticData.DefaultFileEncrypted = Helpers.FolderManager.SetFolderPathOrCreate("DefaultFileEncrypted");
+                config.AppSettings.Settings["DefaultFileEncrypted"].Value = StaticData.DefaultFileEncrypted;
 
-                StaticData.DefaultFileAESDecrypted = FolderManager.SetFolderPathOrCreate("DefaultFileAESDecrypted");
-                config.AppSettings.Settings["DefaultFileAESDecrypted"].Value = StaticData.DefaultFileAESDecrypted;
+                StaticData.DefaultFileDecrypted = Helpers.FolderManager.SetFolderPathOrCreate("DefaultFileDecrypted");
+                config.AppSettings.Settings["DefaultFileDecrypted"].Value = StaticData.DefaultFileDecrypted;
 
-                StaticData.DefaultFileRSAEncrypted = FolderManager.SetFolderPathOrCreate("DefaultFileRSAEncrypted");
-                config.AppSettings.Settings["DefaultFileRSAEncrypted"].Value = StaticData.DefaultFileAESEncrypted;
+                StaticData.DefaultFileToOpen = Helpers.FolderManager.SetFolderPathOrCreate("DefaultFileToOpen");
+                config.AppSettings.Settings["DefaultFileToOpen"].Value = StaticData.DefaultFileEncrypted;
 
-                StaticData.DefaultFileRSADecrypted = FolderManager.SetFolderPathOrCreate("DefaultFileRSADecrypted");
-                config.AppSettings.Settings["DefaultFileRSADecrypted"].Value = StaticData.DefaultFileAESEncrypted;
+                StaticData.DefaultAESKeys = Helpers.FolderManager.SetFolderPathOrCreate("DefaultAESKeys");
+                config.AppSettings.Settings["DefaultAESKeys"].Value = StaticData.DefaultFileEncrypted;
 
-                StaticData.DefaultFileToOpen = FolderManager.SetFolderPathOrCreate("DefaultFileToOpen");
-                config.AppSettings.Settings["DefaultFileToOpen"].Value = StaticData.DefaultFileAESEncrypted;
-
-                StaticData.DefaultAESKeys = FolderManager.SetFolderPathOrCreate("DefaultAESKeys");
-                config.AppSettings.Settings["DefaultAESKeys"].Value = StaticData.DefaultFileAESEncrypted;
-
-                StaticData.DefaultRSAKeys = FolderManager.SetFolderPathOrCreate("DefaultRSAKeys");
-                config.AppSettings.Settings["DefaultRSAKeys"].Value = StaticData.DefaultFileAESEncrypted;
-
-                config.AppSettings.Settings["DefaultFoldersSet"].Value = "true";
-                    StaticData.DefaultFoldersSet = true;
-
+                StaticData.DefaultRSAKeys = Helpers.FolderManager.SetFolderPathOrCreate("DefaultRSAKeys");
+                config.AppSettings.Settings["DefaultRSAKeys"].Value = StaticData.DefaultFileEncrypted;
                 config.Save();
             }
+            else
+            {
+                string defaultFileAESEncrypted = ConfigurationManager.AppSettings["DefaultFileEncrypted"];
+                StaticData.DefaultFileEncrypted = defaultFileAESEncrypted;
+
+                string defaultFileAESDecrypted = ConfigurationManager.AppSettings["DefaultFileDecrypted"];
+                StaticData.DefaultFileDecrypted = defaultFileAESDecrypted;
+
+                string defaultFileToOpen = ConfigurationManager.AppSettings["DefaultFileToOpen"];
+                StaticData.DefaultFileToOpen = defaultFileToOpen;
+
+                string defaultAESKeys = ConfigurationManager.AppSettings["DefaultAESKeys"];
+                StaticData.DefaultAESKeys = defaultAESKeys;
+
+                string defaultRSAKeys = ConfigurationManager.AppSettings["DefaultRSAKeys"];
+                StaticData.DefaultRSAKeys = defaultRSAKeys;
+            }
+
         }
 
 
@@ -110,16 +91,7 @@ namespace SecurityProject
         private void navbar_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selected = navbar.SelectedItem as NavButton;
-
-            if (selected.RequiresDefaultFolders && !StaticData.DefaultFoldersSet)
-            {
-                e.Handled = true;
-                MessageBox.Show("Please set all default folders first.");
-                return;
-            }
-
             navframe.Navigate(selected.Navlink);
-
         }
 
         private void btnMinimize_Click(object sender, RoutedEventArgs e)
@@ -130,26 +102,6 @@ namespace SecurityProject
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
-        }
-
-
-        public static class FolderManager
-        {
-            public static string FolderPath { get; private set; }
-
-            public static string SetFolderPathOrCreate(string folderName)
-            {
-                string fullPath = Path.Combine("Default Folders", folderName);
-
-                if (!Directory.Exists(fullPath))
-                {
-                    Directory.CreateDirectory(fullPath);
-                }
-
-                FolderPath = Path.GetRelativePath(Directory.GetCurrentDirectory(), fullPath);
-
-                return FolderPath;
-            }
         }
     }
 }

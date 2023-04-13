@@ -25,34 +25,18 @@ namespace SecurityProject.Pages
         }
         private void ChooseFolder_Click(object sender, RoutedEventArgs e)
         {
-            //var dialog = new OpenFileDialog();
-            //dialog.Title = "Select a folder";
-            //dialog.Filter = "Folders|*.none";
-            //dialog.CheckFileExists = false;
-            //dialog.CheckPathExists = true;
-            //dialog.FileName = "AES keys";
-            //if (dialog.ShowDialog() == true)
-            //{
-            //    // User selected a folder
-            //    string selectedPath = System.IO.Path.GetDirectoryName(dialog.FileName);
-            //    // Save or load keys from the selected path
-            //}
-
             var result = Helpers.SelectingFolder(Path.GetFullPath(StaticData.DefaultAESKeys), "Folders|*.none");
             if (result != null)
             {
                 StaticData.DefaultAESKeys = result;
                 System.Windows.Forms.MessageBox.Show("Folder picked");
             }
-            
+
         }
 
         private void ChooseFile_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openPNG = new OpenFileDialog();
-
-            //openPNG.InitialDirectory = StaticData.DefaultFileToOpen;
-
             openPNG.InitialDirectory = Path.GetFullPath(StaticData.DefaultFileToOpen);
             openPNG.Filter = "png files (*.png)|*.png";
             openPNG.FilterIndex = 2;
@@ -69,8 +53,8 @@ namespace SecurityProject.Pages
                 bitmap.EndInit();
                 imgResult.Source = bitmap;
             }
-            
-           
+
+
         }
 
         AESEncryption aesEncrypt = new AESEncryption();
@@ -114,8 +98,8 @@ namespace SecurityProject.Pages
                         using (System.Drawing.Image image = System.Drawing.Image.FromStream(ms))
                         {
                             string temp = Microsoft.VisualBasic.Interaction.InputBox("Enter file name", "Decryption ready!", "");
-                            image.Save($"{StaticData.DefaultFileAESDecrypted}/{Path.GetFileNameWithoutExtension(temp)}.png", System.Drawing.Imaging.ImageFormat.Png);
-                            imgResult.Source = new BitmapImage(new Uri($"{StaticData.DefaultFileAESDecrypted}/{Path.GetFileNameWithoutExtension(temp)}.png"));
+                            image.Save($"{StaticData.DefaultFileDecrypted}/{Path.GetFileNameWithoutExtension(temp)}.png", System.Drawing.Imaging.ImageFormat.Png);
+                            imgResult.Source = new BitmapImage(new Uri($"{StaticData.DefaultFileDecrypted}/{Path.GetFileNameWithoutExtension(temp)}.png"));
                         }
                     }
                 }
@@ -123,7 +107,7 @@ namespace SecurityProject.Pages
                 {
                     System.Windows.Forms.MessageBox.Show("Decryption failed: " + ex.Message);
                 }
-                
+
                 // Fade in the image
                 animation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(1));
                 imgResult.BeginAnimation(Image.OpacityProperty, animation);
