@@ -113,5 +113,13 @@ namespace Layout.HelpersClasses
             config.Save(ConfigurationSaveMode.Modified);
             //ConfigurationManager.RefreshSection("appSettings");
         }
+
+        public static void EmptyStaticData()
+        {
+            StaticData.SelectedAESCipher= null;
+            StaticData.SelectedAESKey= null;
+            StaticData.SelectedRSAKey= null;
+            StaticData.SelectedAESFile= null;
+        }
     }
 }
