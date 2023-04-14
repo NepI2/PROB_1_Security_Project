@@ -67,8 +67,16 @@ namespace SecurityProject.Pages
                 try
                 {
                     string name = Microsoft.VisualBasic.Interaction.InputBox("Enter file name for cipher file", "Cipher file", "");
-                    aesEncrypt.EncryptStringToBytes_Aes(name);
-                    LoadAESKeys();
+                    if (name != "")
+                    {
+                        aesEncrypt.EncryptStringToBytes_Aes(name);
+                        LoadAESKeys();
+                    }
+                    else
+                    {
+                        throw new CryptographicException("Cipher file name is empty");
+                    }
+
                 }
                 catch (CryptographicException ex)
                 {
