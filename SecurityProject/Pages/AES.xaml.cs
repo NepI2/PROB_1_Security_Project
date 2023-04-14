@@ -148,6 +148,7 @@ namespace SecurityProject.Pages
 
         private void LoadAESKeys()
         {
+            KeyComboBox.Items.Clear();
             // Get the AES key files from the default folder
             string[] keyFiles = Directory.GetFiles(StaticData.DefaultAESKeys, "*_aes.xml");
 
@@ -155,7 +156,6 @@ namespace SecurityProject.Pages
             foreach (string keyFile in keyFiles)
             {
                 KeyComboBox.Items.Add(System.IO.Path.GetFileName(keyFile));
-                CipherComboBox.Items.Add(System.IO.Path.GetFileName(keyFile));
             }
         }
 
