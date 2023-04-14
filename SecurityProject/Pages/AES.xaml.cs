@@ -144,7 +144,7 @@ namespace SecurityProject.Pages
         private void LoadAESKeys()
         {
             // Get the AES key files from the default folder
-            string[] keyFiles = Directory.GetFiles(StaticData.DefaultAESKeys, "*.xml");
+            string[] keyFiles = Directory.GetFiles(StaticData.DefaultAESKeys, "*_aes.xml");
 
             // Add the file names to the ComboBox
             foreach (string keyFile in keyFiles)
