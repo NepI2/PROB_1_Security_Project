@@ -177,7 +177,7 @@ namespace SecurityProject.Pages
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show("Please decrypt the text first");
+                System.Windows.Forms.MessageBox.Show("There is nothing to save");
             }
         }
     }
