@@ -21,6 +21,7 @@ namespace SecurityProject.Pages
             InitializeComponent();
             LoadAESKeys();
             LoadAESCypherTexts();
+            StaticData.SelectedAESFile = null;
         }
 
         private void ChooseFolder_Click(object sender, RoutedEventArgs e)
