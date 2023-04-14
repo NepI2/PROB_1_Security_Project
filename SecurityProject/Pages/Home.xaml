@@ -31,6 +31,8 @@
         </TextBlock>
         <Label HorizontalAlignment="Center" Foreground="White">Please enter the name of the key</Label>
         <TextBox Style="{DynamicResource InputTextBoxStyleRounded}"
+                 HorizontalContentAlignment="Center"
+                 VerticalContentAlignment="Center"
             x:Name="txtGenKey"
             Width="250"
             Height="30" />
