@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SecurityProject
 {
@@ -29,6 +18,7 @@ namespace SecurityProject
             get { return (Uri)GetValue(NavlinkProperty); }
             set { SetValue(NavlinkProperty, value); }
         }
+
         public static readonly DependencyProperty NavlinkProperty = DependencyProperty.Register("Navlink", typeof(Uri), typeof(NavButton), new PropertyMetadata(null));
 
         public string Navtext
@@ -36,6 +26,7 @@ namespace SecurityProject
             get { return (string)GetValue(NavtextProperty); }
             set { SetValue(NavtextProperty, value); }
         }
+
         public static readonly DependencyProperty NavtextProperty = DependencyProperty.Register("Navtext", typeof(string), typeof(NavButton), new PropertyMetadata(null));
     }
 }

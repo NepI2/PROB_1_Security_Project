@@ -1,30 +1,14 @@
-﻿using Layout;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls.Ribbon;
-
-
 
 namespace SecurityProject.RSA
 {
     public class RSAEncryption
     {
         private RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
-        //private RSAParameters _privKey;
-        //private RSAParameters _pubKey;
-        public RSAEncryption()
-        {
-            //_privKey = rsa.ExportParameters(true);
-            //_pubKey = rsa.ExportParameters(false);
-        }
-
-
 
         public void GenerateKeys(string name)
         {
@@ -41,12 +25,10 @@ namespace SecurityProject.RSA
             File.WriteAllText(publicKeyPath, publicKey);
             File.WriteAllText(privateKeyPath, privateKey);
         }
+
         public string GetPublicKey(string name)
         {
-            //var sw = new StringWriter();
-            //var xs = new XmlSerializer(typeof(RSAParameters));
-            //xs.Serialize(sw, _pubKey);
-            string publicKeyPath = Path.Combine(StaticData.DefaultRSAKeys, $"{name}.xml");
+            string publicKeyPath = Path.Combine(StaticData.DefaultRSAKeys, $"{name}.xml");
             if (File.Exists(publicKeyPath))
             {
                 return File.ReadAllText(publicKeyPath);
@@ -55,8 +37,8 @@ namespace SecurityProject.RSA
             {
                 throw new FileNotFoundException("Private key file not found.", publicKeyPath);
             }
-            //return sw.ToString();
-        }
+        }
+
         public string GetPrivateKey(string name)
         {
             string privateKeyName = name.Replace("_public", "_private");
@@ -70,8 +52,6 @@ namespace SecurityProject.RSA
                 throw new FileNotFoundException("Private key file not found.", privateKeyPath);
             }
         }
-
-
 
         public string Encrypt(string plainText, string publicKey)
         {
@@ -88,8 +68,6 @@ namespace SecurityProject.RSA
                 return null;
             }
         }
-
-
 
         public string Decrypt(string cypherText, string privateKey)
         {

@@ -1,23 +1,8 @@
-﻿using Microsoft.Win32;
+﻿using SecurityProject.RSA;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using SecurityProject.RSA;
-using System.IO;
-using System.ComponentModel;
-using System.Security.Cryptography.X509Certificates;
-using System.Security.Cryptography.Xml;
-using System.Security.Cryptography;
 
 namespace SecurityProject.Pages
 {
@@ -30,6 +15,7 @@ namespace SecurityProject.Pages
         public string DecryptedText { get; set; }
         private RSAEncryption _rsa = new RSAEncryption();
         private string _plainText = string.Empty;
+
         public RSAPage()
         {
             InitializeComponent();
@@ -40,6 +26,7 @@ namespace SecurityProject.Pages
 
         private void LoadEncryptedKeys()
         {
+            LoadEncryptedFilesComboBox.Items.Clear();
             string[] keyFiles = Directory.GetFiles(StaticData.DefaultFileEncrypted, "encrypted_*.xml");
             foreach (string keyFile in keyFiles)
             {
@@ -60,13 +47,8 @@ namespace SecurityProject.Pages
                 string encryptedData = _rsa.Encrypt(_plainText, publicKey);
                 EncryptedText = encryptedData;
                 txtEncrypted.Text = EncryptedText;
-                LoadRSAKeys();
-                LoadAESKeys();
-                LoadEncryptedKeys();
             }
         }
-
-
 
         private void Decrypt_Click(object sender, RoutedEventArgs e)
         {
@@ -80,16 +62,12 @@ namespace SecurityProject.Pages
                 string encryptedBytes = EncryptedText;
                 DecryptedText = _rsa.Decrypt(encryptedBytes, privatekey);
                 txtDecrypted.Text = DecryptedText;
-                LoadRSAKeys();
-                LoadAESKeys();
-                LoadEncryptedKeys();
             }
         }
 
-
-
         private void LoadRSAKeys()
         {
+            KeyComboBoxRSA.Items.Clear();
             string[] keyFiles = Directory.GetFiles(StaticData.DefaultRSAKeys, "*_public.xml");
             foreach (string keyFile in keyFiles)
             {
@@ -98,23 +76,15 @@ namespace SecurityProject.Pages
             }
         }
 
-
-
         private void LoadAESKeys()
         {
-            // Get the RSA key files from the default folder
-            string[] keyFiles = Directory.GetFiles(StaticData.DefaultAESKeys, "*_aes.xml");
-
-
-
-            // Add the file names to the ComboBox
+            KeyComboBox.Items.Clear();
+            string[] keyFiles = Directory.GetFiles(StaticData.DefaultAESKeys, "*_aes.xml");
             foreach (string keyFile in keyFiles)
             {
                 KeyComboBox.Items.Add(System.IO.Path.GetFileName(keyFile));
             }
         }
-
-
 
         private void KeyComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -124,10 +94,9 @@ namespace SecurityProject.Pages
                 string selectedKeyFilePath = Path.Combine(StaticData.DefaultAESKeys, selectedKeyFileName);
                 StaticData.SelectedAESKey = selectedKeyFilePath;
                 _plainText = File.ReadAllText(selectedKeyFilePath);
+                txtEncrypted.Text = _plainText;
             }
         }
-
-
 
         private void KeyComboBoxRSA_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -138,8 +107,6 @@ namespace SecurityProject.Pages
                 StaticData.SelectedRSAKey = selectedKeyFilePath;
             }
         }
-
-
 
         private void SaveAES_Click(object sender, RoutedEventArgs e)
         {
@@ -157,7 +124,6 @@ namespace SecurityProject.Pages
                     {
                         string directoryPath = Path.GetDirectoryName(saveFileDialog1.FileName);
                         File.WriteAllText(Path.Combine(directoryPath, encrypterName), EncryptedText);
-                        LoadRSAKeys();
                         LoadAESKeys();
                         LoadEncryptedKeys();
                     }
@@ -167,10 +133,8 @@ namespace SecurityProject.Pages
 
         private void LoadEncryptedFilesComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
             string selectedKeyFileName = (string)LoadEncryptedFilesComboBox.SelectedItem;
             string selectedKeyFilePath = Path.Combine(StaticData.DefaultFileEncrypted, $"{selectedKeyFileName}.xml");
-            string encryptedBytes = EncryptedText;
             try
             {
                 EncryptedText = File.ReadAllText(selectedKeyFilePath);
@@ -179,9 +143,7 @@ namespace SecurityProject.Pages
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-
             }
-
         }
 
         private void SaveDecryptedAES_Click(object sender, RoutedEventArgs e)
@@ -189,17 +151,19 @@ namespace SecurityProject.Pages
             if (txtEncrypted.Text != "")
             {
                 System.Windows.Forms.SaveFileDialog saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-                saveFileDialog1.InitialDirectory = Path.GetFullPath(StaticData.DefaultFileDecrypted);
-                saveFileDialog1.Filter = "XML|*.xml";
+                saveFileDialog1.InitialDirectory = Path.GetFullPath(StaticData.DefaultAESKeys);
+                saveFileDialog1.Filter = "XML|*_aes.xml";
                 saveFileDialog1.Title = "Save your encrypted AES key";
                 if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     var name = Path.GetFileName(saveFileDialog1.FileName);
-                    var encrypterName = $"decrypted_{name}";
+                    var splitName = name.Split('.');
+                    var encrypterName = $"decrypted_{splitName[0]}_aes.{splitName[1]}";
                     if (saveFileDialog1.FileName != "")
                     {
                         string directoryPath = Path.GetDirectoryName(saveFileDialog1.FileName);
-                        File.WriteAllText(Path.Combine(directoryPath, encrypterName), EncryptedText);
+                        File.WriteAllText(Path.Combine(directoryPath, encrypterName), DecryptedText);
+                        LoadAESKeys();
                     }
                 }
             }

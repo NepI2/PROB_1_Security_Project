@@ -1,22 +1,9 @@
 ﻿using Layout.HelpersClasses;
-using Microsoft.VisualBasic.ApplicationServices;
-using SecurityProject.Pages;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.IO;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 
 namespace SecurityProject
 {
@@ -52,13 +39,13 @@ namespace SecurityProject
                 config.AppSettings.Settings["DefaultFileDecrypted"].Value = StaticData.DefaultFileDecrypted;
 
                 StaticData.DefaultFileToOpen = Helpers.FolderManager.SetFolderPathOrCreate("DefaultFileToOpen");
-                config.AppSettings.Settings["DefaultFileToOpen"].Value = StaticData.DefaultFileEncrypted;
+                config.AppSettings.Settings["DefaultFileToOpen"].Value = StaticData.DefaultFileToOpen;
 
                 StaticData.DefaultAESKeys = Helpers.FolderManager.SetFolderPathOrCreate("DefaultAESKeys");
-                config.AppSettings.Settings["DefaultAESKeys"].Value = StaticData.DefaultFileEncrypted;
+                config.AppSettings.Settings["DefaultAESKeys"].Value = StaticData.DefaultAESKeys;
 
                 StaticData.DefaultRSAKeys = Helpers.FolderManager.SetFolderPathOrCreate("DefaultRSAKeys");
-                config.AppSettings.Settings["DefaultRSAKeys"].Value = StaticData.DefaultFileEncrypted;
+                config.AppSettings.Settings["DefaultRSAKeys"].Value = StaticData.DefaultRSAKeys;
                 config.Save();
             }
             else
@@ -78,9 +65,7 @@ namespace SecurityProject
                 string defaultRSAKeys = ConfigurationManager.AppSettings["DefaultRSAKeys"];
                 StaticData.DefaultRSAKeys = defaultRSAKeys;
             }
-
         }
-
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {

@@ -20,7 +20,9 @@ namespace SecurityProject.Pages
         {
             InitializeComponent();
             LoadAESKeys();
+            LoadAESCypherTexts();
         }
+
         private void ChooseFolder_Click(object sender, RoutedEventArgs e)
         {
             var result = Helpers.SelectingFolder(Path.GetFullPath(StaticData.DefaultAESKeys), "Folders|*.none");
@@ -29,7 +31,6 @@ namespace SecurityProject.Pages
                 StaticData.DefaultAESKeys = result;
                 System.Windows.Forms.MessageBox.Show("Folder picked");
             }
-
         }
 
         private void ChooseFile_Click(object sender, RoutedEventArgs e)
@@ -51,12 +52,10 @@ namespace SecurityProject.Pages
                 bitmap.EndInit();
                 imgResult.Source = bitmap;
             }
-
-
         }
 
-        AESEncryption aesEncrypt = new AESEncryption();
-        AESDecryption aesDecrypt = new AESDecryption();
+        private AESEncryption aesEncrypt = new AESEncryption();
+        private AESDecryption aesDecrypt = new AESDecryption();
 
         private void Encrypt_Click(object sender, RoutedEventArgs e)
         {
@@ -78,13 +77,13 @@ namespace SecurityProject.Pages
                 // Fade in the image
                 animation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(1));
                 imgResult.BeginAnimation(Image.OpacityProperty, animation);
+                LoadAESCypherTexts();
             }
         }
 
         private void Decrypt_Click(object sender, RoutedEventArgs e)
         {
-
-            if (StaticData.SelectedAESFile != null && StaticData.SelectedAESKey != null && StaticData.SelectedAESCipher != null)
+            if (StaticData.SelectedAESKey != null && StaticData.SelectedAESCipher != null)
             {
                 // Fade out the image
                 DoubleAnimation animation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(1));
@@ -99,7 +98,7 @@ namespace SecurityProject.Pages
                         {
                             string temp = Microsoft.VisualBasic.Interaction.InputBox("Enter file name", "Decryption ready!", "");
                             image.Save($"{StaticData.DefaultFileDecrypted}/{Path.GetFileNameWithoutExtension(temp)}.png", System.Drawing.Imaging.ImageFormat.Png);
-                            imgResult.Source = new BitmapImage(new Uri($"{StaticData.DefaultFileDecrypted}/{Path.GetFileNameWithoutExtension(temp)}.png"));
+                            imgResult.Source = new BitmapImage(new Uri($"{Path.Combine(Path.GetFullPath(StaticData.DefaultFileDecrypted), $"{temp}.png")}"));
                         }
                     }
                 }
@@ -111,6 +110,11 @@ namespace SecurityProject.Pages
                 // Fade in the image
                 animation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(1));
                 imgResult.BeginAnimation(Image.OpacityProperty, animation);
+                LoadAESCypherTexts();
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("Please check that you have the key and the cypher text chosen");
             }
         }
 
@@ -128,6 +132,7 @@ namespace SecurityProject.Pages
             }
             StaticData.SelectedAESKey = openXML.FileName;
         }
+
         private void LoadAESKeys()
         {
             // Get the AES key files from the default folder
@@ -140,7 +145,6 @@ namespace SecurityProject.Pages
                 CipherComboBox.Items.Add(System.IO.Path.GetFileName(keyFile));
             }
         }
-
 
         private void KeyComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -157,8 +161,19 @@ namespace SecurityProject.Pages
             if (CipherComboBox.SelectedItem != null)
             {
                 string selectedKeyFileName = (string)CipherComboBox.SelectedItem;
-                string selectedKeyFilePath = Path.Combine(StaticData.DefaultAESKeys, selectedKeyFileName);
+                string selectedKeyFilePath = Path.Combine(StaticData.DefaultFileEncrypted, $"{selectedKeyFileName}.xml");
                 StaticData.SelectedAESCipher = selectedKeyFilePath;
+            }
+        }
+
+        private void LoadAESCypherTexts()
+        {
+            CipherComboBox.Items.Clear();
+            string[] keyFiles = Directory.GetFiles(StaticData.DefaultFileEncrypted, "*_ciphertext_aes.xml");
+            foreach (string keyFile in keyFiles)
+            {
+                string keyFileName = Path.GetFileNameWithoutExtension(keyFile);
+                CipherComboBox.Items.Add(keyFileName);
             }
         }
     }

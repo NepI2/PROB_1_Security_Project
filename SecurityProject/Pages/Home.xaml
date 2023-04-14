@@ -1,28 +1,56 @@
-﻿<Page x:Class="SecurityProject.Pages.Home"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:SecurityProject.Pages"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="Home">
+﻿<Page
+    x:Class="SecurityProject.Pages.Home"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SecurityProject.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Home"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
 
-    <StackPanel Orientation="Vertical" Margin="20">
-        <TextBlock HorizontalAlignment="Center" Foreground="#1985a1" FontSize="20" FontWeight="Bold" Margin="10">Welcome to this encryption tool!</TextBlock>
-        <TextBlock 
-            HorizontalAlignment="Center" 
-            Foreground="#1985a1" 
-            FontSize="20" 
-            TextWrapping="Wrap"
+    <StackPanel Margin="20" Orientation="Vertical">
+        <TextBlock
+            Margin="10"
+            HorizontalAlignment="Center"
+            FontSize="20"
+            FontWeight="Bold"
+            Foreground="#1985a1">
+            Welcome to this encryption tool!
+        </TextBlock>
+        <TextBlock
+            Width="400"
             Margin="30"
-            Width="400">With this app you can encrypt and decrypt with AES and RSA encryption and save your keys in XML format</TextBlock>
-        <Label Foreground="White" HorizontalAlignment="Center">Please enter the name of the key</Label>
-        <TextBox x:Name ="txtGenKey" Height="30" Width="250"/>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Margin="10" Height="30" Width="150" Style="{DynamicResource RoundedButton}" Content="generate AES key" x:Name="generateAES" Click="generateAES_Click"></Button>
-            <Button Margin="10" Height="30" Width="150" Style="{DynamicResource RoundedButton}" x:Name="generateRSA" Click="generateRSA_Click" >generate RSA key</Button>
+            HorizontalAlignment="Center"
+            FontSize="20"
+            Foreground="#1985a1"
+            TextWrapping="Wrap">
+            With this app you can encrypt and decrypt with AES and RSA encryption and save your keys in XML format
+        </TextBlock>
+        <Label HorizontalAlignment="Center" Foreground="White">Please enter the name of the key</Label>
+        <TextBox
+            x:Name="txtGenKey"
+            Width="250"
+            Height="30" />
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+            <Button
+                x:Name="generateAES"
+                Width="150"
+                Height="30"
+                Margin="10"
+                Click="generateAES_Click"
+                Content="generate AES key"
+                Style="{DynamicResource RoundedButton}" />
+            <Button
+                x:Name="generateRSA"
+                Width="150"
+                Height="30"
+                Margin="10"
+                Click="generateRSA_Click"
+                Style="{DynamicResource RoundedButton}">
+                generate RSA key
+            </Button>
         </StackPanel>
-
     </StackPanel>
 </Page>

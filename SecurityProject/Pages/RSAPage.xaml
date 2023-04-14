@@ -43,7 +43,6 @@
             VerticalContentAlignment="Center"
             SelectionChanged="KeyComboBoxRSA_SelectionChanged"
             Style="{DynamicResource ComboBoxStyleRounded}" />
-        <!--<Button Style="{DynamicResource RoundedButton}" Grid.Column="2" Grid.Row="0" Margin="10" Click="ChooseFile_Click">Pick File</Button>-->
         <Label
             Grid.Row="1"
             Grid.Column="0"
@@ -110,8 +109,8 @@
             Grid.Row="7"
             Grid.Column="2"
             Margin="10"
-            
-            Style="{DynamicResource RoundedButton}" Click="SaveDecryptedAES_Click">
+            Click="SaveDecryptedAES_Click"
+            Style="{DynamicResource RoundedButton}">
             Save Decrypted AES Key
         </Button>
         <TextBox
@@ -137,6 +136,5 @@
             VerticalContentAlignment="Center"
             SelectionChanged="LoadEncryptedFilesComboBox_SelectionChanged"
             Style="{DynamicResource ComboBoxStyleRounded}" />
-        
     </Grid>
 </Page>

@@ -26,6 +26,7 @@ namespace AES
             // Save XML document to file
             doc.Save($"{StaticData.DefaultAESKeys}/{name}_aes.xml");
         }
+
         public byte[] EncryptStringToBytes_Aes(string name)
         {
             byte[] Key;
@@ -83,7 +84,7 @@ namespace AES
                             base64Key = System.Convert.ToBase64String(msEncrypt.ToArray());
                             //open XMLFile and add the encrypted key to it
                             doc2.Root.SetAttributeValue("CipherText", base64Key);
-                            doc2.Save($"{StaticData.DefaultAESKeys}/{name}_ciphertext_aes.xml");
+                            doc2.Save($"{StaticData.DefaultFileEncrypted}/{name}_ciphertext_aes.xml");
                             return msEncrypt.ToArray();
                         }
                     }

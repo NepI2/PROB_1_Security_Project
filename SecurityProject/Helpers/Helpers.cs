@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SecurityProject;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -9,7 +11,6 @@ namespace Layout.HelpersClasses
 {
     public static class Helpers
     {
-
         public static class FolderManager
         {
             public static string FolderPath { get; private set; }
@@ -36,26 +37,26 @@ namespace Layout.HelpersClasses
             else
                 return true;
         }
+
         public static string SelectingFolder(string defaultPath, string type)
         {
             using (var fbd = new System.Windows.Forms.FolderBrowserDialog())
             {
-
                 fbd.Description = "Select a folder";
                 fbd.ShowNewFolderButton = true;
                 System.Windows.Forms.DialogResult result = fbd.ShowDialog();
 
                 if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
-                    {
-                        return fbd.SelectedPath;
-                    }
-
+                {
+                    return fbd.SelectedPath;
+                }
                 else
-                    {
-                        return defaultPath;
-                    }
+                {
+                    return defaultPath;
+                }
             }
         }
+
         public static string SelectFile(string defaultPath, string type)
         {
             var dialog = new System.Windows.Forms.FolderBrowserDialog();
@@ -71,11 +72,12 @@ namespace Layout.HelpersClasses
                 return null;
             }
         }
+
         public static bool SavingFile(this string element, string pathForSaving, string extention)
         {
-
             return false;
         }
+
         public static string Base64Encoding(string element)
         {
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(element));
@@ -97,6 +99,19 @@ namespace Layout.HelpersClasses
         {
             list.ItemsSource = null;
             list.ItemsSource = items;
+        }
+
+        public static void UpdateFolderPathSettings(string settingName)
+        {
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+            if (StaticData.DefaultFileEncrypted != null)
+            {
+                config.AppSettings.Settings[settingName].Value = StaticData.DefaultFileEncrypted;
+            }
+
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appSettings");
         }
     }
 }
