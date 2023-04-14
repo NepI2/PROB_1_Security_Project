@@ -17,7 +17,7 @@
     mc:Ignorable="d">
     <Border CornerRadius="19">
         <Border.Background>
-            <ImageBrush ImageSource="/Data/BinaryRed.png" />
+            <ImageBrush ImageSource="/Data/BinaryBlue.png" />
         </Border.Background>
         <Border
             BorderBrush="#1985a1"
