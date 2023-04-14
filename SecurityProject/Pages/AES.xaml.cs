@@ -87,6 +87,10 @@ namespace SecurityProject.Pages
                 imgResult.BeginAnimation(Image.OpacityProperty, animation);
                 LoadAESCypherTexts();
             }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("Please check that you have the key and the cypher text chosen");
+            }
         }
 
         private void Decrypt_Click(object sender, RoutedEventArgs e)

@@ -63,6 +63,10 @@ namespace SecurityProject.Pages
                 DecryptedText = _rsa.Decrypt(encryptedBytes, privatekey);
                 txtDecrypted.Text = DecryptedText;
             }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("Please encrypt the text first");
+            }
         }
 
         private void LoadRSAKeys()
@@ -129,6 +133,10 @@ namespace SecurityProject.Pages
                     }
                 }
             }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("There is nothing to save");
+            }
         }
 
         private void LoadEncryptedFilesComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -166,6 +174,10 @@ namespace SecurityProject.Pages
                         LoadAESKeys();
                     }
                 }
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("Please decrypt the text first");
             }
         }
     }
