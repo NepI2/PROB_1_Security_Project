@@ -76,8 +76,13 @@ namespace SecurityProject
 
         private void navbar_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+           
             var selected = navbar.SelectedItem as NavButton;
-            navframe.Navigate(selected.Navlink);
+            if (selected != null)
+            {
+                navframe.Navigate(selected.Navlink);
+            }
+            
         }
 
         private void btnMinimize_Click(object sender, RoutedEventArgs e)
