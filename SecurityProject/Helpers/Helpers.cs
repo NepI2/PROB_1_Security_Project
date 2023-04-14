@@ -101,17 +101,17 @@ namespace Layout.HelpersClasses
             list.ItemsSource = items;
         }
 
-        public static void UpdateFolderPathSettings(string settingName)
+        public static void UpdateFolderPathSettings(string settingName, string path)
         {
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
-            if (StaticData.DefaultFileEncrypted != null)
+            if (!string.IsNullOrEmpty(settingName))
             {
-                config.AppSettings.Settings[settingName].Value = StaticData.DefaultFileEncrypted;
+                config.AppSettings.Settings[settingName].Value = path;
             }
 
             config.Save(ConfigurationSaveMode.Modified);
-            ConfigurationManager.RefreshSection("appSettings");
+            //ConfigurationManager.RefreshSection("appSettings");
         }
     }
 }
