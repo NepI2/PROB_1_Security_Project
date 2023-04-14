@@ -46,7 +46,8 @@ namespace SecurityProject
 
                 StaticData.DefaultRSAKeys = Helpers.FolderManager.SetFolderPathOrCreate("DefaultRSAKeys");
                 config.AppSettings.Settings["DefaultRSAKeys"].Value = StaticData.DefaultRSAKeys;
-                config.Save();
+                config.Save(ConfigurationSaveMode.Modified);
+                //ConfigurationManager.RefreshSection("appSettings");
             }
             else
             {

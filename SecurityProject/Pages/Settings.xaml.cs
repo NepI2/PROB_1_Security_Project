@@ -27,7 +27,7 @@ namespace SecurityProject.Pages
         private void RSAKeysFolderBtn_Click(object sender, RoutedEventArgs e)
         {
             var result = Helpers.SelectingFolder(StaticData.DefaultRSAKeys, "Folders|*.none");
-            Helpers.UpdateFolderPathSettings("DefaultRSAKeys");
+            Helpers.UpdateFolderPathSettings("DefaultRSAKeys", result);
             StaticData.DefaultRSAKeys = result;
             RSAKeyPlaceholder.Text = result;
         }
@@ -35,7 +35,7 @@ namespace SecurityProject.Pages
         private void AESKeysFolderBtn_Click(object sender, RoutedEventArgs e)
         {
             var result = Helpers.SelectingFolder(StaticData.DefaultAESKeys, "Folders|*.none");
-            Helpers.UpdateFolderPathSettings("DefaultAESKeys");
+            Helpers.UpdateFolderPathSettings("DefaultAESKeys", result);
             StaticData.DefaultAESKeys = result;
             AESKeyPlaceholder.Text = result;
         }
@@ -43,7 +43,7 @@ namespace SecurityProject.Pages
         private void EncriptedFilesFolderBtn_Click(object sender, RoutedEventArgs e)
         {
             var result = Helpers.SelectingFolder(StaticData.DefaultFileEncrypted, "Folders|*.none");
-            Helpers.UpdateFolderPathSettings("DefaultFileEncrypted");
+            Helpers.UpdateFolderPathSettings("DefaultFileEncrypted", result);
             StaticData.DefaultFileEncrypted = result;
             EncryptedFilesPlaceholder.Text = result;
         }
@@ -51,7 +51,7 @@ namespace SecurityProject.Pages
         private void DecriptedFilesFolderBtn_Click(object sender, RoutedEventArgs e)
         {
             var result = Helpers.SelectingFolder(StaticData.DefaultFileDecrypted, "Folders|*.none");
-            Helpers.UpdateFolderPathSettings("DefaultFileDecrypted");
+            Helpers.UpdateFolderPathSettings("DefaultFileDecrypted", result);
             StaticData.DefaultFileDecrypted = result;
             DecryptedFilesPlaceholder.Text = result;
         }
@@ -59,7 +59,7 @@ namespace SecurityProject.Pages
         private void ChoosingFilesFolderBtn_Click(object sender, RoutedEventArgs e)
         {
             var result = Helpers.SelectingFolder(StaticData.DefaultFileToOpen, "Folders|*.none");
-            Helpers.UpdateFolderPathSettings("DefaultFileToOpen");
+            Helpers.UpdateFolderPathSettings("DefaultFileToOpen", result);
             StaticData.DefaultFileToOpen = result;
             ChoosingFilesPlaceholder.Text = result;
         }
