@@ -84,7 +84,7 @@ namespace AES
                             base64Key = System.Convert.ToBase64String(msEncrypt.ToArray());
                             //open XMLFile and add the encrypted key to it
                             doc2.Root.SetAttributeValue("CipherText", base64Key);
-                            doc2.Save($"{StaticData.DefaultFileEncrypted}/{name}_ciphertext_aes.xml");
+                            doc2.Save($"{StaticData.DefaultFileEncrypted}/ciphertext-aes-{name}.xml");
                             return msEncrypt.ToArray();
                         }
                     }

@@ -182,7 +182,7 @@ namespace SecurityProject.Pages
         private void LoadAESCypherTexts()
         {
             CipherComboBox.Items.Clear();
-            string[] keyFiles = Directory.GetFiles(StaticData.DefaultFileEncrypted, "*_ciphertext_aes.xml");
+            string[] keyFiles = Directory.GetFiles(StaticData.DefaultFileEncrypted, "ciphertext-aes-*.xml");
             foreach (string keyFile in keyFiles)
             {
                 string keyFileName = Path.GetFileNameWithoutExtension(keyFile);
